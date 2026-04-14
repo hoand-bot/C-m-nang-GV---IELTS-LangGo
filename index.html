@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cẩm Nang Giảng Viên – LangGo</title>
+<style>
+:root{
+  --blue:#1a56a0;--blue-l:#e8f1fb;--blue-d:#0f3460;
+  --green:#16a34a;--green-l:#f0fdf4;
+  --red:#dc2626;--red-l:#fef2f2;
+  --amber:#d97706;--amber-l:#fffbeb;
+  --purple:#7c3aed;--purple-l:#f5f3ff;
+  --teal:#0891b2;--teal-l:#ecfeff;
+  --gray:#64748b;--gray-l:#f8fafc;
+  --border:#e2e8f0;--text:#1e293b;--muted:#475569;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4f8;color:var(--text);font-size:14.5px;line-height:1.7}
+
+/* SEARCH BAR */
+#search-bar{position:sticky;top:0;z-index:100;background:#fff;border-bottom:2px solid var(--border);padding:10px 16px;display:flex;align-items:center;gap:10px}
+#search-input{flex:1;border:1.5px solid var(--border);border-radius:22px;padding:8px 16px 8px 38px;font-size:14px;color:var(--text);background:#f8fafc;outline:none;transition:.2s;font-family:inherit}
+#search-input:focus{border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(26,86,160,.1)}
+#search-icon{position:absolute;left:28px;color:var(--gray);font-size:15px;pointer-events:none}
+#search-count{font-size:12px;color:var(--gray);white-space:nowrap}
+#btn-prev,#btn-next{background:#fff;border:1.5px solid var(--border);border-radius:8px;width:28px;height:28px;cursor:pointer;font-size:11px;color:var(--blue);font-weight:700;display:flex;align-items:center;justify-content:center;transition:.15s;flex-shrink:0}
+#btn-prev:hover,#btn-next:hover{background:var(--blue);color:#fff;border-color:var(--blue)}
+#btn-prev:disabled,#btn-next:disabled{opacity:.35;cursor:not-allowed;background:#fff;color:var(--gray)}
+mark.current{background:#f97316;color:#fff;border-radius:3px}
+#search-clear{background:none;border:none;cursor:pointer;color:var(--gray);font-size:18px;padding:0 4px;display:none;line-height:1}
+#search-clear:hover{color:var(--red)}
+.search-wrap{position:relative;flex:1;display:flex;align-items:center}
+mark{background:#fef08a;border-radius:3px;padding:0 2px;color:var(--text)}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--blue-d),var(--blue));color:#fff;padding:36px 28px 24px;text-align:center}
+.hero .badge{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:3px 14px;font-size:11px;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px}
+.hero h1{font-size:25px;font-weight:800;margin-bottom:6px}
+.hero p{font-size:13px;opacity:.8}
+
+/* TOC */
+.toc{background:#fff;border-bottom:3px solid var(--blue);padding:14px 20px}
+.toc-lbl{font-size:10px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.toc-pills{display:flex;flex-wrap:wrap;gap:5px}
+.toc-pills a{text-decoration:none;color:var(--blue);font-size:11.5px;font-weight:600;padding:3px 10px;border:1px solid var(--border);border-radius:20px;transition:.15s;white-space:nowrap}
+.toc-pills a:hover{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+.content{max-width:800px;margin:0 auto;padding:20px 14px 100px}
+
+/* PHASE */
+.phase{margin-bottom:8px;border-radius:12px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.07)}
+.ph{display:flex;align-items:center;gap:12px;cursor:pointer;background:#fff;padding:13px 16px;border-left:5px solid var(--blue);user-select:none;transition:background .15s}
+.ph:hover{background:#fafbff}
+.ph.orange{border-left-color:var(--amber)}.ph.green{border-left-color:var(--green)}
+.ph.purple{border-left-color:var(--purple)}.ph.red{border-left-color:var(--red)}.ph.teal{border-left-color:var(--teal)}
+.ph-ico{font-size:20px;flex-shrink:0}
+.ph-info{flex:1}
+.ph-tag{font-size:10px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--gray)}
+.ph-title{font-size:15px;font-weight:800}
+.ph-sub{font-size:12px;color:var(--muted);margin-top:1px}
+.ph-arr{font-size:14px;color:var(--gray);transition:transform .25s;flex-shrink:0}
+.ph-arr.open{transform:rotate(90deg)}
+
+.pb{background:#fff;max-height:0;overflow:hidden;transition:max-height .4s ease}
+.pb.open{max-height:99999px}
+.pb-inner{padding:18px 20px 22px}
+
+/* STEPS */
+.steps{display:flex;flex-direction:column;gap:16px}
+.step{display:flex;gap:12px;align-items:flex-start}
+.sn{width:26px;height:26px;min-width:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;margin-top:2px;background:var(--blue);flex-shrink:0}
+.sn.g{background:var(--green)}.sn.a{background:var(--amber)}.sn.p{background:var(--purple)}.sn.r{background:var(--red)}.sn.t{background:var(--teal)}
+.sb{flex:1}
+.st{font-weight:700;color:var(--blue);margin-bottom:4px;font-size:14.5px}
+.st.g{color:var(--green)}.st.a{color:var(--amber)}.st.p{color:var(--purple)}.st.r{color:var(--red)}.st.t{color:var(--teal)}
+
+/* ALERTS – inline lưu ý */
+.al{border-radius:8px;padding:9px 13px;margin:8px 0;font-size:13.5px;display:flex;gap:9px;align-items:flex-start}
+.al-i{font-size:15px;flex-shrink:0;margin-top:2px}
+.al-r{background:var(--red-l);border:1px solid #fca5a5;color:#7f1d1d}
+.al-y{background:var(--amber-l);border:1px solid #fcd34d;color:#78350f}
+.al-g{background:var(--green-l);border:1px solid #86efac;color:#14532d}
+.al-b{background:var(--blue-l);border:1px solid #93c5fd;color:#1e3a5f}
+.al-gr{background:var(--gray-l);border:1px solid var(--border);color:var(--muted)}
+
+/* DEADLINE */
+.dl{background:#fff7ed;border:2px solid var(--amber);border-radius:8px;padding:7px 12px;margin:7px 0;font-size:13px;color:#78350f;display:flex;align-items:center;gap:7px}
+
+/* TABLE */
+table.t{width:100%;border-collapse:collapse;font-size:13.5px;margin:8px 0;overflow:hidden;border-radius:8px}
+table.t th{background:var(--blue);color:#fff;padding:8px 12px;text-align:left;font-weight:600}
+table.t td{padding:8px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+table.t tr:nth-child(even) td{background:var(--gray-l)}
+table.t tr:last-child td{border-bottom:none}
+table.t.g th{background:var(--green)}.t.a th{background:var(--amber)}.t.p th{background:var(--purple)}.t.r th{background:var(--red)}.t.t th{background:var(--teal)}
+
+/* BULLETS */
+ul.b{list-style:none;margin:6px 0}
+ul.b li{padding:4px 0 4px 17px;position:relative;border-bottom:1px solid var(--border);font-size:13.5px}
+ul.b li:last-child{border-bottom:none}
+ul.b li::before{content:"▸";color:var(--blue);position:absolute;left:0;top:6px;font-size:11px}
+
+/* SECTION HEADER within steps */
+.sh{font-size:11px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.7px;border-bottom:2px solid var(--border);padding-bottom:5px;margin:18px 0 12px}
+.sh:first-child{margin-top:0}
+
+/* DIVIDER */
+.divider{height:1px;background:var(--border);margin:14px 0}
+
+/* CONTACTS */
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin-top:8px}
+.ccard{background:var(--gray-l);border:1px solid var(--border);border-radius:9px;padding:12px}
+.crole{font-size:10px;font-weight:700;text-transform:uppercase;color:var(--gray);margin-bottom:4px}
+.cname{font-weight:700;font-size:14px;color:var(--text)}
+.cphone{color:var(--blue);font-weight:700;font-size:14px}
+.cnote{font-size:12px;color:var(--muted);margin-top:3px}
+
+.tag{display:inline-block;padding:2px 7px;border-radius:5px;font-size:11.5px;font-weight:700}
+.tg-r{background:var(--red-l);color:var(--red);border:1px solid #fca5a5}
+.tg-g{background:var(--green-l);color:var(--green);border:1px solid #86efac}
+.tg-y{background:var(--amber-l);color:#92400e;border:1px solid #fcd34d}
+
+a.lk{color:var(--blue);font-weight:600;text-decoration:none}
+a.lk:hover{text-decoration:underline}
+.pen td:first-child{font-weight:700;color:var(--red)}
+
+/* EDIT TOOLBAR */
+#etb{position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+#etb-hint{background:#1e293b;color:#fff;font-size:12px;padding:6px 14px;border-radius:20px;display:none;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.etb-row{display:flex;gap:8px}
+.etb-btn{padding:10px 18px;border-radius:22px;font-size:13px;font-weight:700;cursor:pointer;border:none;box-shadow:0 4px 14px rgba(0,0,0,.15);transition:.2s}
+.etb-btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+#btn-edit{background:var(--blue);color:#fff}
+#btn-edit.on{background:var(--red)}
+#btn-save{background:var(--green);color:#fff;display:none}
+[contenteditable=true]{outline:2px dashed var(--blue)!important;border-radius:3px;background:rgba(26,86,160,.04)!important;cursor:text!important;min-height:1em}
+[contenteditable=true]:focus{outline:2px solid var(--blue)!important;background:rgba(26,86,160,.08)!important}
+
+/* NO RESULTS */
+.no-results{text-align:center;padding:40px 20px;color:var(--gray);font-size:14px;display:none}
+
+@media(max-width:600px){
+  .hero h1{font-size:21px}.cgrid{grid-template-columns:1fr}
+  .pb-inner{padding:14px 14px 18px}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="badge">Tài liệu nội bộ – LangGo</div>
+  <h1>📚 Cẩm Nang Giảng Viên</h1>
+  <p>Theo trình tự thời gian · Từ pass training đến kết thúc khoá học</p>
+</div>
+
+<!-- SEARCH BAR -->
+<div id="search-bar">
+  <div class="search-wrap">
+    <span id="search-icon">🔍</span>
+    <input id="search-input" type="text" placeholder="Tìm kiếm nhanh... (VD: deadline, điểm danh, recording)" autocomplete="off">
+    <button id="search-clear" onclick="clearSearch()" title="Xoá">×</button>
+  </div>
+  <div id="search-nav" style="display:none;align-items:center;gap:6px;flex-shrink:0">
+    <span id="search-count" style="font-size:12px;color:#64748b;white-space:nowrap"></span>
+    <button id="btn-prev" onclick="navResult(-1)" title="Kết quả trước">◀</button>
+    <button id="btn-next" onclick="navResult(1)" title="Kết quả tiếp theo">▶</button>
+  </div>
+</div>
+
+<!-- TOC -->
+<div class="toc">
+  <div class="toc-lbl">📋 Nhảy đến giai đoạn</div>
+  <div class="toc-pills">
+    <a href="#p1">1 · Pass training</a>
+    <a href="#p2">2 · Nhận lớp mới</a>
+    <a href="#p3">3 · Trước khai giảng</a>
+    <a href="#p4">4 · Buổi khai giảng</a>
+    <a href="#p5">5 · Mỗi buổi học</a>
+    <a href="#p6">6 · Daily Challenge</a>
+    <a href="#p7">7 · Phụ đạo</a>
+    <a href="#p8">8 · Giữa khoá</a>
+    <a href="#p9">9 · Cuối khoá & test</a>
+    <a href="#p10">10 · Sau khi lớp xong</a>
+    
+    <a href="#p11">11 · Liên hệ</a>
+    <a href="#p13">13 · Đổi lịch & Nghỉ việc</a>
+    <a href="#p12">12 · Kỷ luật</a>
+  </div>
+</div>
+
+<div class="content">
+<div class="no-results" id="no-results">Không tìm thấy kết quả nào. Thử từ khoá khác nhé.</div>
+
+<!-- ══ P1 ══ -->
+<div class="phase" id="p1">
+  <div class="ph" onclick="tog(this)">
+    <div class="ph-ico">🎓</div>
+    <div class="ph-info">
+      <div class="ph-tag">Giai đoạn 1</div>
+      <div class="ph-title">Vừa pass training – Nhận tài khoản & tham gia kênh</div>
+      <div class="ph-sub">Làm ngay sau khi được xác nhận qua training</div>
+    </div>
+    <div class="ph-arr">▶</div>
+  </div>
+  <div class="pb">
+    <div class="pb-inner">
+      <div class="steps">
+
+        <div class="step"><div class="sn">1</div><div class="sb">
+          <div class="st">3 module training</div>
+          <div style="border-radius:10px;overflow:hidden;border:1px solid #e2e8f0;margin-top:8px">
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;background:#0891b2;padding:9px 14px;gap:8px">
+              <span style="color:#fff;font-weight:700;font-size:13px">Module</span>
+              <span style="color:#fff;font-weight:700;font-size:13px">Nội dung</span>
+              <span style="color:#fff;font-weight:700;font-size:13px">Link tài nguyên</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:11px 14px;gap:8px;border-bottom:1px solid #e2e8f0;align-items:start">
+              <span style="font-size:13.5px"><strong>Module 1</strong> – Pronunciation</span>
+              <span style="font-size:13.5px;color:#475569">Phát âm chuẩn</span>
+              <span style="font-size:13.5px"><a class="lk" href="https://www.youtube.com/playlist?list=PLxc4V8jyRl2c4T7rKrV3jkX4f9rX7xs5S" target="_blank">Video</a> · <a class="lk" href="https://drive.google.com/file/d/1U3OPsewDZ6QKyxLlrftJIGB4z3tn__cW/view?usp=sharing" target="_blank">PDF</a> · <a class="lk" href="https://drive.google.com/file/d/1y6T1ZY88pZLDkXW3vDfSkT7qza0HyW-m/view" target="_blank">Link súc tích</a> · <a class="lk" href="https://drive.google.com/file/d/1QDUJwjZ1QdLMxKxkWjDqiHFCH9P2oanG/view?usp=sharing" target="_blank">Advanced</a></span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:11px 14px;gap:8px;background:#f8fafc;border-bottom:1px solid #e2e8f0;align-items:start">
+              <span style="font-size:13.5px"><strong>Module 2</strong> – Culture + PP</span>
+              <span style="font-size:13.5px;color:#475569">Winning Habits, ELC, NLP, quy trình dạy âm</span>
+              <span style="font-size:13.5px"><a class="lk" href="https://drive.google.com/drive/folders/1jx8pJXOkEMUVxXs8rqS5xxKe-zv9Fp-j" target="_blank">Drive</a> · <a class="lk" href="https://drive.google.com/file/d/15ku_yuaQCbm0nOcMCBacG8XMQuaimNB5/view?usp=sharing" target="_blank">Video demo dạy âm</a> · <a class="lk" href="https://drive.google.com/drive/u/0/folders/1DRLkNR97SPpMS031K6zyg96GoI-CVaRN" target="_blank">ELC+NLP</a></span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:11px 14px;gap:8px;align-items:start">
+              <span style="font-size:13.5px"><strong>Module 3</strong> – Lesson Planning</span>
+              <span style="font-size:13.5px;color:#475569">Kế hoạch bài giảng</span>
+              <span style="font-size:13.5px"><a class="lk" href="https://drive.google.com/drive/folders/1EOknTbPeGwR6syyq6Uhsbv7uzmx9WU6Y?usp=sharing" target="_blank">Drive</a></span>
+            </div>
+          </div>
+          <div class="al al-y" style="margin-top:8px"><span class="al-i">💡</span><span>GV có thể chủ động xem lại các tài liệu liên quan để chuẩn bị tốt nhất cho khoá sắp dạy</span></div>
+        </div></div>
+
+        <div class="step"><div class="sn">2</div><div class="sb">
+          <div class="st">Nhận tài khoản từ BVH qua email & đăng nhập kiểm tra</div>
+          <ul class="b">
+            <li><strong>Cổng đào tạo:</strong> <a class="lk" href="https://daotao.langgo.vn/" target="_blank">daotao.langgo.vn</a> – đăng nhập, làm quen giao diện. Xem <a class="lk" href="https://docs.google.com/document/d/1-rqKm7wpkg1TgfAWNUG8cZSyEBDZzUTemkbU5BVCFgA/edit?usp=sharing" target="_blank">hướng dẫn sử dụng cổng</a></li>
+            <li><strong>Zoom dùng chung:</strong> đăng nhập thử, kiểm tra âm thanh/camera. Tuyệt đối <strong>không đăng nhập trong khung 17h–23h</strong> – giờ cao điểm GV khác đang dạy.</li>
+          </ul>
+        </div></div>
+
+        <div class="step"><div class="sn">3</div><div class="sb">
+          <div class="st">Tham gia đủ các kênh nội bộ</div>
+          <ul class="b">
+            <li><strong>Facebook "GIẢNG VIÊN LANGGO"</strong> – nơi BCM/BVH đăng thông báo. Đọc xong phải <strong>confirm + tag 2–3 GV cùng team</strong></li>
+            <li><strong>Zalo Thông báo:</strong> <a class="lk" href="https://zalo.me/g/nxtllh255" target="_blank">zalo.me/g/nxtllh255</a> – check tin ghim để lấy link nộp báo cáo hàng tháng</li>
+            <li><strong>Zalo Báo lỗi:</strong> <a class="lk" href="https://zalo.me/g/suhjwy069" target="_blank">zalo.me/g/suhjwy069</a></li>
+            <li><strong>Zalo Sharing:</strong> <a class="lk" href="https://zalo.me/g/ioujsd907" target="_blank">zalo.me/g/ioujsd907</a></li>
+            <li><strong>Zalo GV Offline</strong> (chỉ dành GV dạy offline): <a class="lk" href="https://zalo.me/g/tzlqmm230" target="_blank">zalo.me/g/tzlqmm230</a></li>
+          </ul>
+          <div class="al al-b"><span class="al-i">💡</span><span>Chưa được add vào nhóm nào → chủ động nhắn Headteacher.</span></div>
+        </div></div>
+
+        <div class="step"><div class="sn">4</div><div class="sb">
+          <div class="st">Cập nhật lịch rảnh lên Cổng đào tạo</div>
+          <p>Theo <a class="lk" href="https://docs.google.com/document/d/148Qg1YdNctffiCYypDjEDFldaIef7wvxrsT7zymAgQY/edit?usp=sharing" target="_blank">hướng dẫn cập nhật lịch</a>. BVH chỉ xếp lớp được khi GV có lịch rảnh trên Cổng.</p>
+        </div></div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ P2 ══ -->
+<div class="phase" id="p2">
+  <div class="ph orange" onclick="tog(this)">
+    <div class="ph-ico">📋</div>
+    <div class="ph-info">
+      <div class="ph-tag">Giai đoạn 2</div>
+      <div class="ph-title">Nhận lớp mới – Sau khi BVH xếp lớp & gửi mail khai giảng</div>
+      <div class="ph-sub">Nhận mail từ BVH → thực hiện ngay trước ngày khai giảng</div>
+    </div>
+    <div class="ph-arr">▶</div>
+  </div>
+  <div class="pb">
+    <div class="pb-inner">
+      <div class="steps">
+
+        <div class="step"><div class="sn a">1</div><div class="sb">
+          <div class="st a">Đọc kỹ mail khai giảng từ BVH</div>
+          <p>Ghi nhớ: thông tin lớp, danh sách HV, link nhóm Zalo/Facebook lớp, link upload recording, tài khoản Zoom được phân công.</p>
+        </div></div>
+
+        <div class="step"><div class="sn a">2</div><div class="sb">
+          <div class="st a">[Lần đầu dạy band mới] Gọi 1:1 với Headteacher</div>
+          <div class="dl">⏰ Muộn nhất <strong>3 ngày trước khai giảng</strong></div>
+          <p>Lấy lộ trình, tài liệu, check quy trình và giải đáp thắc mắc liên quan đến band đó.</p>
+          <div class="al al-y"><span class="al-i">⚠️</span><span>Chỉ dùng tài liệu trên Drive được share – <strong>không tải về một loạt</strong>, không dùng tài liệu cũ từ khoá trước. Slides/handout liên tục được cập nhật.</span></div>
+        </div></div>
+
+        <div class="step"><div class="sn a">3</div><div class="sb">
+          <div class="st a">Tham gia nhóm Facebook/Zalo của lớp & đảm bảo 100% HV vào nhóm trước buổi 1</div>
+          <p>Chủ động liên hệ HV chưa join hoặc nhờ Cố vấn học tập hỗ trợ. Không thụ động chờ.</p>
+          <div class="al al-r"><span class="al-i">🚫</span><span>Chỉ dùng nhóm Zalo do trung tâm tạo. <strong>Tuyệt đối không tạo nhóm chat riêng với HV</strong> – vi phạm có thể dẫn đến chấm dứt hợp đồng.</span></div>
+        </div></div>
+
+        <div class="step"><div class="sn a">4</div><div class="sb">
+          <div class="st a">Quay & gửi video giới thiệu bản thân vào nhóm lớp</div>
+          <ul class="b">
+            <li>Nội dung: tên, điểm IELTS, kinh nghiệm dạy (nếu &gt;1 năm), lời nhắn nhủ tạo thiện cảm.</li>
+            <li>Ngôn ngữ: tiếng Anh + sub tiếng Việt (hoặc song ngữ). Trang phục formal, năng lượng như khi đi dạy.</li>
+            <li><strong>Không</strong> đề cập tuổi và thông tin quá cá nhân. Ẩn thông tin trên Zalo/Facebook cá nhân.</li>
+            <li>Quy trình: quay → gửi bản <em>unedited</em> cho Headteacher duyệt → nhận feedback → edit → gửi vào nhóm lớp.</li>
+            <li>Sau khi GV gửi, yêu cầu mỗi HV cũng gửi video giới thiệu (tên, quê, trường/nghề, mục tiêu IELTS).</li>
+          </ul>
+          <div class="dl">⏰ <strong>Deadline gửi video vào nhóm lớp:</strong> ít nhất 6 tiếng trước giờ khai giảng</div>
+        </div></div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ P3 ══ -->
+<div class="phase" id="p3">
+  <div class="ph teal" onclick="tog(this)">
+    <div class="ph-ico">🕐</div>
+    <div class="ph-info">
+      <div class="ph-tag">Giai đoạn 3</div>
+      <div class="ph-title">Ngay trước buổi khai giảng – Checklist kỹ thuật</div>
+      <div class="ph-sub">Làm trong ngày khai giảng, trước giờ học</div>
+    </div>
+    <div class="ph-arr">▶</div>
+  </div>
+  <div class="pb">
+    <div class="pb-inner">
+      <div class="steps">
+
+        <div class="step"><div class="sn t">1</div><div class="sb">
+          <div class="st t">Đăng nhập kiểm tra & cài đặt Zoom</div>
+          <ul class="b">
+            <li>Đăng nhập tài khoản Zoom BVH cấp, kiểm tra âm thanh/camera.</li>
+            <li>Cài background LangGo: <a class="lk" href="https://drive.google.com/file/d/18_kuUDYbsuuYyuHBBVODOusaENcK7qKi/view?usp=sharing" target="_blank">Tải tại đây</a></li>
+          </ul>
+          <div class="al al-r"><span class="al-i">🚫</span><span>Tuyệt đối <strong>không đăng nhập Zoom trong khung 17h–23h</strong>. Đăng nhập sai giờ = đá GV khác đang dạy ra khỏi phòng.</span></div>
+          <div class="al al-y"><span class="al-i">⏰</span><span><strong>Kết thúc lớp đúng giờ:</strong> ca 17h45 bắt buộc tan lúc 19h50 để không ảnh hưởng ca sau.</span></div>
+        </div></div>
+
+        <div class="step"><div class="sn t">2</div><div class="sb">
+          <div class="st t">Nhắn tin vào nhóm lớp nhắc HV chuẩn bị</div>
+          <div class="dl">⏰ Gửi trước tối thiểu <strong>6 tiếng</strong> trước giờ khai giảng</div>
+          <p>Nội dung: lời chào, link Zoom, nhắc HV đọc Thư Winning Habits, vào phòng trước <strong>5–10 phút</strong>.</p>
+        </div></div>
+
+        <div class="step"><div class="sn t">3</div><div class="sb">
+          <div class="st t">Chuẩn bị slide Lesson 1 và slide Rules lớp học</div>
+          <p>Lấy từ folder Drive được share. Không dùng tài liệu cũ từ khoá trước.</p>
+        </div></div>
+
+        <div class="step"><div class="sn t">4</div><div class="sb">
+          <div class="st t">[Offline] Chuẩn bị phòng học</div>
+          <ul class="b">
+            <li>Bút dạ: chuẩn bị sẵn. Thiếu/hết mực → xuống lễ tân tầng 2.</li>
+            <li>Phòng P.401, P.501 Trường Chinh: bật điện từ phòng P.402/P.502. Không mở được → lễ tân tầng 2.</li>
+          </ul>
+        </div></div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ P4 ══ -->
+<div class="phase" id="p4">
+  <div class="ph green" onclick="tog(this)">
+    <div class="ph-ico">🎉</div>
+    <div class="ph-info">
+      <div class="ph-tag">Giai đoạn 4</div>
+      <div class="ph-title">Buổi khai giảng – Trong buổi & Sau buổi</div>
+      <div class="ph-sub">Quản lý thành viên · Nội dung khai giảng · Việc cần làm ngay sau buổi 1</div>
+    </div>
+    <div class="ph-arr">▶</div>
+  </div>
+  <div class="pb">
+    <div class="pb-inner">
+      <div class="sh">TRONG BUỔI</div>
+      <div class="steps">
+
+        <div class="step"><div class="sn g">1</div><div class="sb">
+          <div class="st g">Bật "Record on this Computer" ngay khi vào phòng Zoom – trước khi HV vào</div>
+          <div class="al al-r"><span class="al-i">⚠️</span><span>Quên record = mất dữ liệu buổi học, không khôi phục được.</span></div>
+        </div></div>
+
+        <div class="step"><div class="sn g">2</div><div class="sb">
+          <div class="st g">Kiểm soát danh sách thành viên vào lớp</div>
+          <ul class="b">
+            <li><strong>Online:</strong> Chỉ admit HV có trong danh sách trên Cổng. Tài khoản lạ/tên không đúng → check nhóm Zalo → hỏi CVHT → kick ra.</li>
+            <li><strong>Offline:</strong> Điểm danh đầu giờ, chỉ cho HV trong danh sách vào lớp.</li>
+            <li>Chỉ nhận thông tin thêm/bớt HV từ BVH, không tự quyết định.</li>
+          </ul>
+          <div class="al al-r"><span class="al-i">⚖️</span><span>Để HV ngoài DS vào học: Lần 1 trừ 1 bậc NQ · Lần 2 xuống bậc thấp nhất · Lần 3+ khấu trừ lương theo HĐ.</span></div>
+        </div></div>
+
+        <div class="step"><div class="sn g">3</div><div class="sb">
+          <div class="st g">Dẫn dắt nội dung khai giảng</div>
+          <ul class="b">
+            <li>GV & HV làm quen: tóm tắt từ video trong nhóm lớp (tên + 1 đặc điểm dễ nhớ).</li>
+            <li>Mục tiêu khoá: IELTS + 5 Winning Habits, số giờ học, DC, phụ đạo (bắt buộc với lớp online).</li>
+            <li>Phổ biến Rules & Cam kết học tập → đảm bảo <strong>100% HV confirm</strong> → GV ghim Rules trong nhóm Zalo.</li>
+            <li>Nhấn mạnh: cần dành ít nhất <strong>2 tiếng/ngày</strong> làm DC. Chỉ HV đủ cam kết mới được đăng ký test lại Speaking.</li>
+          </ul>
+        </div></div>
+
+        <div class="step"><div class="sn g">4</div><div class="sb">
+          <div class="st g">Dạy Lesson 1 theo đúng lộ trình</div>
+        </div></div>
+
+      </div>
+
+      <div class="sh">SAU BUỔI KHAI GIẢNG</div>
+      <div class="steps">
+
+        <div class="step"><div class="sn g">5</div><div class="sb">
+          <div class="st g">Điểm danh + Up Daily Challenge lên Cổng đào tạo</div>
+          <div class="dl">⏰ <strong>23h59 cùng ngày</strong> (DC có thể up trước buổi học)</div>
+          <p>Thông báo vào nhóm lớp để HV biết lên Cổng làm bài.</p>
+        </div></div>
+
+        <div class="step"><div class="sn g">6</div><div class="sb">
+          <div class="st g">Gửi & ghim quy định lớp học trong nhóm Zalo</div>
+          <p>Chọn đúng hình thức (online/offline). Lớp online: paste thêm link phụ đạo kèm theo. Xem <a class="lk" href="https://docs.google.com/document/d/1aX3D-aTCkp0Lqa6GnyIwFY3UnX_m1zXs3FIzPAVe9S0/edit#" target="_blank">mẫu tin nhắn ghim</a>.</p>
+        </div></div>
+
+        <div class="step"><div class="sn g">7</div><div class="sb">
+          <div class="st g">Upload recording & cập nhật Cổng đào tạo</div>
+          <ul class="b">
+            <li><strong>B1:</strong> Record đã tự lưu về máy GV trong buổi học.</li>
+            <li><strong>B2:</strong> Upload file lên link BVH gửi trong mail khai giảng.</li>
+            <li><strong>B3:</strong> Vào Cổng → <em>Lộ trình buổi học</em> → điền link slides vào <strong>"Bài giảng"</strong>, link recording vào <strong>"Video buổi học"</strong>.</li>
+          </ul>
+          <div class="al al-y"><span class="al-i">⚠️</span><span><strong>Sign out Zoom ngay sau khi lớp kết thúc</strong> để không ảnh hưởng GV khác dùng chung tài khoản.</span></div>
+        </div></div>
+
+        <div class="step"><div class="sn g">8</div><div class="sb">
+          <div class="st g">[GV mới / Dạy band mới] Gửi báo cáo buổi 1 cho Headteacher qua Zalo</div>
+          <div class="dl">⏰ <strong>Trong vòng 12 tiếng</strong> kể từ khi lớp kết thúc</div>
+          <p>Gửi link báo cáo ở chế độ "Có thể nhận xét/chỉnh sửa".</p>
+        </div></div>
+
+        <div class="step"><div class="sn g">9</div><div class="sb">
+          <div class="st g">Gửi mail confirm trình độ đầu vào sau 2 buổi đầu tiên</div>
+          <p><strong>Gửi đến:</strong> <span style="background:#e8f1fb;padding:1px 6px;border-radius:4px;font-size:13.5px;color:#1a56a0;font-weight:600"><span style="font-family:monospace;color:#1a56a0;font-weight:600">headteacher&#64;langgo.edu.vn</span></span> · CC: <span style="background:#e8f1fb;padding:1px 6px;border-radius:4px;font-size:13.5px;color:#1a56a0;font-weight:600"><span style="font-family:monospace;color:#1a56a0;font-weight:600">hoand&#64;langgo.edu.vn</span></span>, <span style="background:#e8f1fb;padding:1px 6px;border-radius:4px;font-size:13.5px;color:#1a56a0;font-weight:600"><span style="font-family:monospace;color:#1a56a0;font-weight:600">banvanhanh&#64;langgo.edu.vn</span></span></p>
+          <p style="margin-top:5px">Ghi rõ tên các HV cần check lại điểm đầu vào kèm lý do.</p>
+          <div class="al al-r"><span class="al-i">⛔</span><span>GV <strong>không được tự trao đổi với HV về trình độ</strong> khi chưa confirm với BCM.</span></div>
+        </div></div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ P5 ══ -->
+<div class="phase" id="p5">
+  <div class="ph" onclick="tog(this)">
+    <div class="ph-ico">🔁</div>
+    <div class="ph-info">
+      <div class="ph-tag">Giai đoạn 5</div>
+      <div class="ph-title">Mỗi buổi học thường – Checklist lặp lại</div>
+      <div class="ph-sub">Áp dụng đều đặn sau mỗi buổi trong suốt khoá</div>
+    </div>
+    <div class="ph-arr">▶</div>
+  </div>
+  <div class="pb">
+    <div class="pb-inner">
+      <div class="sh">ĐẦU MỖI BUỔI</div>
+      <div class="steps">
+
+        <div class="step"><div class="sn">1</div><div class="sb">
+          <div class="st">Bật "Record on this Computer" trước khi HV vào phòng</div>
+        </div></div>
+
+        <div class="step"><div class="sn">2</div><div class="sb">
+          <div class="st">Vào phòng sớm 5–10 phút + Review Rules & DC đầu giờ</div>
+          <ul class="b">
+            <li>Vào phòng sớm set up. Nhắn tin giục HV vào lớp nếu có bạn chưa vào. Hỏi thăm, tạo không khí thoải mái.</li>
+            <li>Khen bạn làm DC tốt, nhắc chung bạn vi phạm (không nêu tên cụ thể).</li>
+            <li>Review bài cũ ngắn gọn trước khi vào bài mới.</li>
+            <li>Show Cổng đào tạo nhắc HV cam kết DC – ít nhất <strong>2 tiếng/ngày</strong>.</li>
+          </ul>
+          <div class="al al-b"><span class="al-i">💡</span><span>Lớp thực hiện rules tốt: có thể giảm xuống review <strong>3 buổi/lần</strong>.</span></div>
+        </div></div>
+
+        <div class="step"><div class="sn">2b</div><div class="sb">
+          <div class="st">Tiêu chuẩn chuyên nghiệp trong mỗi buổi dạy</div>
+          <ul class="b">
+            <li>Vào phòng sớm 5–10 phút để set up, nhắn tin giục HV vào lớp nếu có bạn chưa vào.</li>
+            <li>Luôn <strong>100% năng lượng</strong> – tươi cười, tạo không khí thoải mái, thân thiện.</li>
+            <li>Giới thiệu Objectives rõ ràng đầu mỗi bài. Wrap-up lại nội dung cuối buổi.</li>
+            <li>Đặt câu hỏi liên tục để tương tác với HV. Chia nhóm để HV tương tác với nhau.</li>
+            <li>Có phần <strong>Closing circle</strong> sau các phần để HV cùng review lại kiến thức.</li>
+            <li>Feedback sau phần Practice của HV: nêu điểm tốt đã làm được + điểm cần lưu ý để cả lớp rút kinh nghiệm.</li>
+            <li>Tốc độ nói đủ tạo hứng thú, khiến HV tập trung. Dùng kết hợp tiếng Việt và tiếng Anh linh hoạt.</li>
+            <li>Luôn <strong>bật camera</strong> và yêu cầu HV cũng bật. Trang phục, tóc tai formal (áo có cổ, quần dài, váy chạm/qua đầu gối).</li>
+            <li>Background LangGo hoặc nền trắng trơn. Âm thanh, ánh sáng, đường truyền mạng đảm bảo.</li>
+            <li>Slide đã được điều chỉnh và có hiệu ứng đúng theo flow bài dạy.</li>
+          </ul>
+        </div></div>
+
+        <div class="step"><div class="sn">3</div><div class="sb">
+          <div class="st">[Offline] Chấm công trước giờ dạy</div>
+          <div class="al al-y"><span class="al-i">💡</span><span>Máy hỏng/mất điện → chụp ảnh cùng máy chấm công, ảnh thể hiện rõ ngày giờ.</span></div>
+        </div></div>
+
+      </div>
+
+      <div class="sh">SAU MỖI BUỔI</div>
+      <div class="steps">
+
+        <div class="step"><div class="sn">6</div><div class="sb">
+          <div class="st">Điểm danh trên Cổng đào tạo</div>
+          <div class="dl">⏰ <strong>23h59 cùng ngày</strong> – làm ngay sau buổi học</div>
+          <ul class="b">
+            <li>Điểm danh đúng thực tế. HV nghỉ xem recording <strong>không được tính điểm danh bù</strong>.</li>
+            <li>Điểm danh thiếu/sai thực tế = 1 lỗi vi phạm ảnh hưởng điểm NQ.</li>
+          </ul>
+          <div class="al al-r"><span class="al-i">⚠️</span><span>Cổng <strong>tự khoá điểm danh sau 48h</strong> → buổi đó <strong>không được tính lương</strong>. Cần đổi ngày học: đổi ở tab <em>"Lộ trình buổi học"</em> <strong>TRƯỚC</strong> rồi mới tick điểm danh – làm ngược bị nhảy ngày.</span></div>
+        </div></div>
+
+        <div class="step"><div class="sn">7</div><div class="sb">
+          <div class="st">Up DC + Upload recording & cập nhật Cổng, Sign out Zoom</div>
+          <p>Upload recording lên link BVH → vào Cổng điền link slides + link recording → Sign out Zoom ngay.</p>
+          <div class="al al-r"><span class="al-i">🚫</span><span><strong>Không dùng emoji khi nhận xét bài DC</strong> – sẽ làm mất bài HV, không khôi phục được. HV cũng không được dùng emoji khi nộp bài.</span></div>
+        </div></div>
+
+        <div class="step"><div class="sn">5b</div><div class="sb">
+          <div class="st">Tương tác với HV trên group lớp sau buổi học</div>
+          <p>Hỗ trợ giải đáp thắc mắc kịp thời qua nhóm Zalo lớp.</p>
+        </div></div>
+
+        <div class="step"><div class="sn">8</div><div class="sb">
+          <div class="st">Tương tác với HV trên nhóm lớp sau buổi học</div>
+          <p>Hỗ trợ giải đáp thắc mắc kịp thời. Kết thúc lớp đúng giờ (ca 17h45 bắt buộc tan lúc <strong>19h50</strong> để không ảnh hưởng ca sau).</p>
+        </div></div>
+
+        <div class="step"><div class="sn">9</div><div class="sb">
+          <div class="st">[Offline] Dọn dẹp phòng học</div>
+          <ul class="b">
+            <li>Lau bảng, cuộn dây máy chiếu gọn gàng.</li>
+            <li>Nhắc HV gập/cất ghế về cuối lớp, xếp <strong>5 ghế/hàng</strong>.</li>
+            <li>Tắt điện, quạt, điều hoà. Bỏ bút dạ hết mực.</li>
+          </ul>
+          <div class="al al-r"><span class="al-i">💰</span><span>Không hướng dẫn xếp ghế/vệ sinh: L1 nhắc · L2 phạt 50k · L3+ phạt 100k. Quên tắt điện/quạt/điều hoà: <strong>200k/lần</strong>.</span></div>
+        </div></div>
+
+      </div>
+
+      <div class="sh">HÀNG THÁNG</div>
+      <div class="steps">
+
+        <div class="step"><div class="sn">7</div><div class="sb">
+          <div class="st">Tham gia họp đội GV hàng tháng</div>
+          <p>Lịch cố định: <strong>Chủ nhật thứ 3 mỗi tháng</strong>. Viết report và làm action plan đúng deadline.</p>
+        </div></div>
+
+        <div class="step"><div class="sn">8</div><div class="sb">
+          <div class="st">Nộp báo cáo lớp học đúng deadline</div>
+          <p>Xem deadline trong tin ghim nhóm Zalo Thông báo. Mỗi team có deadline riêng. Dùng 1 link docs duy nhất, tạo thẻ mới mỗi tháng, để chế độ "Có thể nhận xét/chỉnh sửa". <a class="lk" href="https://docs.google.com/document/d/1zNUvBLnZKVyHJLslB_ojoBtZSHfA1X09ofAcBnqZS6o/edit?usp=sharing" target="_blank">Form mẫu báo cáo</a></p>
+        </div></div>
+
+        <div class="step"><div class="sn">11</div><div class="sb">
+          <div class="st">Giới thiệu HV mới → nhận hoa hồng (nếu có)</div>
+          <p>Điền <a class="lk" href="https://forms.gle/1E3LYXtC1yUSj8wx7" target="_blank">form đăng ký</a> → nhắn Ms. Trang – 0346 686 728 <strong>trước khi HV đăng ký</strong>.</p>
+          <table class="t" style="margin-top:6px">
+            <thead><tr><th>Giá trị HĐ</th><th>Hoa hồng</th></tr></thead>
+            <tbody>
+              <tr><td>Dưới 10.000.000đ</td><td>100.000đ</td></tr>
+              <tr><td>10.000.000đ – 20.000.000đ</td><td>200.000đ</td></tr>
+              <tr><td>Trên 20.000.000đ</td><td>400.000đ</td></tr>
+            </tbody>
+          </table>
+          <div class="al al-y"><span class="al-i">⚠️</span><span>HV tìm hiểu/đăng ký trước khi GV báo Ms. Trang → <strong>không được hưởng hoa hồng</strong>.</span></div>
+        </div></div>
+
+        <div class="step"><div class="sn">10</div><div class="sb">
+          <div class="st">Xin nghỉ buổi / đổi lịch học</div>
+          <ul class="b">
+            <li>Nghỉ 1 buổi: báo BVH qua email trước tối thiểu <strong>24 tiếng</strong>.</li>
+            <li>Nghỉ 2 buổi: báo trước tối thiểu <strong>3 ngày</strong>.</li>
+            <li>Bất khả kháng nghỉ đột xuất: báo HV và BVH ngay khi có thể + gửi email giải trình chi tiết tới <span style="background:#e8f1fb;padding:1px 6px;border-radius:4px;font-size:13.5px;color:#1a56a0;font-weight:600"><span style="font-family:monospace;color:#1a56a0;font-weight:600">banvanhanh&#64;langgo.edu.vn</span></span>.</li>
+            <li>Đồng thời thông báo HV và có kế hoạch dạy bù.</li>
+          </ul>
+          <div class="al al-r"><span class="al-i">⚠️</span><span>Mỗi lớp (1 band): tối đa <strong>3 lần</strong> nghỉ/đổi lịch (kể cả lễ tết, mỗi buổi nghỉ tính 1 lần). Tiêu đề mail: <em>"Đổi lịch học lớp ___ lần 1/2/3"</em>. Từ lần thứ 4 trở đi phải có BVH duyệt mail trước mới được thực hiện – nếu chưa được duyệt, các khiếu nại phát sinh GV phải chịu trách nhiệm.</span></div>
+        </div></div>
+
+        <div class="step"><div class="sn">12</div><div class="sb">
+          <div class="st">Tham gia họp đội GV hàng tháng</div>
+          <p>Lịch cố định: <strong>Chủ nhật thứ 3 mỗi tháng</strong>. Viết report và làm action plan đúng deadline.</p>
+        </div></div>
+
+        <div class="step"><div class="sn">13</div><div class="sb">
+          <div class="st">Email confirm trình độ đầu vào HV (sau 2 buổi đầu tiên)</div>
+          <p>Gửi đến: <strong><span style="background:#e8f1fb;padding:1px 6px;border-radius:4px;font-size:13.5px;color:#1a56a0;font-weight:600"><span style="font-family:monospace;color:#1a56a0;font-weight:600">headteacher&#64;langgo.edu.vn</span></span></strong> · CC: <span style="background:#e8f1fb;padding:1px 6px;border-radius:4px;font-size:13.5px;color:#1a56a0;font-weight:600"><span style="font-family:monospace;color:#1a56a0;font-weight:600">hoand&#64;langgo.edu.vn</span></span>, <span style="background:#e8f1fb;padding:1px 6px;border-radius:4px;font-size:13.5px;color:#1a56a0;font-weight:600"><span style="font-family:monospace;color:#1a56a0;font-weight:600">banvanhanh&#64;langgo.edu.vn</span></span></p>
+          <p>Ghi rõ tên các HV cần check lại điểm đầu vào kèm lý do.</p>
+          <div class="al al-r"><span class="al-i">🚫</span><span>GV <strong>không được tự trao đổi với HV về trình độ</strong> khi chưa confirm với BCM.</span></div>
+        </div></div>
+
+        <div class="step"><div class="sn">14</div><div class="sb">
+          <div class="st">Xử lý HV vi phạm cam kết học tập – quy trình 3 bước</div>
+          <div class="al al-y"><span class="al-i">ℹ️</span><span>Áp dụng khi HV không nghiêm túc: nghỉ học nhiều, làm thiếu DC, không tham gia test/phụ đạo dù đã nhắc nhở.</span></div>
+          <ul class="b">
+            <li><strong>Bước 1:</strong> GV chủ động nhắc nhở, đôn đốc, động viên HV tối thiểu <strong>4 lần qua tin nhắn</strong> (trong đó ≥1 lần quán triệt quy định cam kết học tập). <em>Lưu ảnh chụp làm minh chứng.</em></li>
+            <li><strong>Bước 2:</strong> Liên hệ Tư vấn viên (TVV) nhờ đôn đốc, nhắc nhở HV.</li>
+            <li><strong>Bước 3:</strong> Thông báo tình hình HV tới BVH qua email. Sau khi đủ 3 bước → gửi email <strong>đề xuất không tính kết quả HV vào tỉ lệ lên band</strong>.</li>
+          </ul>
+          <div class="dl">⏰ Gửi email đề xuất muộn nhất: <strong>trước ngày 12 của tháng sau</strong> khi lớp kết thúc</div>
+          <div class="al al-b"><span class="al-i">ℹ️</span><div><strong>TH HV không tham gia test (đã nhắc ≥2 lần + nhờ TVV):</strong> Gửi mail đề xuất không tính kết quả vào tỉ lệ lên band trước ngày 12 tháng sau.<br>
+          <strong>Band 6.0–7.0:</strong> HV không tham gia test với mọi lý do đều không tính tỉ lệ lên band (sau khi đã nhắc ≥2 lần + nhờ TVV).</div></div>
+        </div></div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ P6 ══ -->
+<div class="phase" id="p6">
+  <div class="ph purple" onclick="tog(this)">
+    <div class="ph-ico">📝</div>
+    <div class="ph-info">
+      <div class="ph-tag">Giai đoạn 6</div>
+      <div class="ph-title">Daily Challenge – Quy định chi tiết</div>
+      <div class="ph-sub">Deadline HV nộp · Deadline GV chấm · Xử lý nộp muộn</div>
+    </div>
+    <div class="ph-arr">▶</div>
+  </div>
+  <div class="pb">
+    <div class="pb-inner">
+      <div class="steps">
+
+        <div class="step"><div class="sn p">1</div><div class="sb">
+          <div class="st p">Up DC lên Cổng đào tạo</div>
+          <p>Mỗi lesson thường có <strong>2 Daily Challenges</strong>. Up trước buổi học hoặc muộn nhất <strong>23h59 cùng ngày</strong>.</p>
+        </div></div>
+
+        <div class="step"><div class="sn p">2</div><div class="sb">
+          <div class="st p">Deadline HV nộp bài</div>
+          <table class="t p" style="margin-top:6px">
+            <thead><tr><th>Lịch lớp</th><th>Band</th><th>Deadline</th><th>Ví dụ (học T2)</th></tr></thead>
+            <tbody>
+              <tr><td rowspan="2">3 buổi/tuần</td><td>Band 0–4.0</td><td>36 tiếng từ 23h59 ngày học</td><td>12h trưa T4</td></tr>
+              <tr><td>Band 4.0–7.0</td><td>60 tiếng từ 23h59 ngày học</td><td>12h trưa T5</td></tr>
+              <tr><td>2 buổi/tuần</td><td>Tất cả</td><td>Tối đa 72 tiếng</td><td>–</td></tr>
+              <tr><td>DC nộp lại (tối đa 2/khoá)</td><td>Tất cả</td><td>GV đặt 2–3 ngày</td><td>–</td></tr>
+            </tbody>
+          </table>
+          <div class="al al-b"><span class="al-i">ℹ️</span><span>Bài nộp muộn hệ thống tự ghi <strong>NM</strong> – không tính vào tổng DC hoàn thành dù sau đó có tích sao. GV không tự đồng ý gia hạn.</span></div>
+        </div></div>
+
+        <div class="step"><div class="sn p">3</div><div class="sb">
+          <div class="st p">Deadline GV chấm chữa</div>
+          <table class="t p" style="margin-top:6px">
+            <thead><tr><th>Band</th><th>Kỹ năng</th><th>Deadline chấm</th></tr></thead>
+            <tbody>
+              <tr><td>Band 0–4.0</td><td>Tất cả</td><td>Trước buổi học tiếp theo</td></tr>
+              <tr><td rowspan="2">Band 4.0–7.0</td><td>Listening, Reading, Speaking</td><td>Trong 24h từ deadline DC</td></tr>
+              <tr><td>Writing</td><td>Trong 48h từ deadline DC</td></tr>
+              <tr><td>DC nộp lại</td><td>Tất cả</td><td>Trong 5 ngày</td></tr>
+            </tbody>
+          </table>
+          <div class="al al-y"><span class="al-i">⚠️</span><span>Chấm quá <strong>5 ngày</strong> từ deadline DC → nhận email nhắc tự động → ảnh hưởng điểm NQ và phân bậc lương.</span></div>
+          <div class="al al-b"><span class="al-i">📄</span><span>Xem đầy đủ: <a class="lk" href="https://docs.google.com/document/d/179voSlgay1IwKN3lnKVQr03Tw9P_Y3thP2BVlJiFD9M/edit#heading=h.6510mp4u1t7m" target="_blank">Quy định nộp bài & hướng dẫn chấm chữa DC</a></span></div>
+        </div></div>
+
+        <div class="step"><div class="sn p">4</div><div class="sb">
+          <div class="st p">Tích sao và xử lý chất lượng bài</div>
+          <ul class="b">
+            <li>100% DC phải có trạng thái: <strong>tích sao hoặc không tích sao</strong>. Không để hiện "Kiểm tra" màu đỏ.</li>
+            <li>Tích sao dựa vào <strong>chất lượng bài</strong> – không phải thời gian nộp. Bài nộp muộn nhưng đủ chất lượng vẫn được tích sao.</li>
+            <li><strong>Đạo văn &gt;30%:</strong> không tích sao. Bài test cuối khoá đạo văn &gt;30% = 0 điểm + học lại (không được test lại).</li>
+          </ul>
+          <div class="al al-r"><span class="al-i">⚖️</span><span>Chấm bài không đảm bảo chất lượng: Lần 1 hạ NQ thấp nhất · Lần 2 hạ NQ + trừ 10% lương · Lần 3+ trừ 30% lương + chấm dứt HĐ.</span></div>
+        </div></div>
+
+        <div class="step"><div class="sn p">5</div><div class="sb">
+          <div class="st p">Khi HV xin nộp muộn – cách xử lý đúng</div>
+          <ul class="b">
+            <li>Không đồng ý gia hạn. Báo rõ: DC đã được hệ thống ghi NM, GV không thể can thiệp.</li>
+            <li>Gửi lại phần lưu ý trong mail khai giảng để HV hiểu hậu quả đối với cam kết đầu ra.</li>
+            <li>Vẫn khuyến khích HV nộp bài dù muộn để không bỏ lỡ kiến thức và nhận feedback.</li>
+          </ul>
+        </div></div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ P7 ══ -->
+<div class="phase" id="p7">
+  <div class="ph teal" onclick="tog(this)">
+    <div class="ph-ico">🎧</div>
+    <div class="ph-info">
+      <div class="ph-tag">Giai đoạn 7</div>
+      <div class="ph-title">Phụ đạo – Chỉ áp dụng lớp Online 1:7 hoặc 1:8</div>
+      <div class="ph-sub">Thông báo sau buổi 3 · 3 hình thức · Lương 50k/30 phút</div>
+    </div>
+    <div class="ph-arr">▶</div>
+  </div>
+  <div class="pb">
+    <div class="pb-inner">
+      <div class="steps">
+
+        <div class="step"><div class="sn t">1</div><div class="sb">
+          <div class="st t">Thông báo lịch phụ đạo vào nhóm lớp (sau khoảng buổi 3)</div>
+          <p>Gửi link lịch rảnh hàng tuần để HV đăng ký. Xem <a class="lk" href="https://docs.google.com/spreadsheets/d/1m6RXiWhHSU2tVnGXTJzIOLi8nnLSBeSgWmLsqDVKdBI/edit?usp=sharing" target="_blank">mẫu lịch rảnh phụ đạo</a>.</p>
+          <div class="al al-b"><span class="al-i">ℹ️</span><span>Phụ đạo là <strong>quyền lợi bắt buộc của HV</strong>. GV nói rõ ngay từ đầu khoá. GV nhận lương <strong>50.000đ/30 phút</strong> – chỉ tính khi điểm danh đúng trên Cổng phần Phụ đạo.</span></div>
+        </div></div>
+
+        <div class="step"><div class="sn t">2</div><div class="sb">
+          <div class="st t">Tổ chức phụ đạo – 3 hình thức (ưu tiên 1:1)</div>
+          <table class="t t" style="margin-top:6px">
+            <thead><tr><th>Hình thức</th><th>Cách thực hiện</th></tr></thead>
+            <tbody>
+              <tr><td><strong>TH1: 1:1</strong> <span class="tg-g tag">Ưu tiên</span></td><td>~5 buổi/lần, 30 phút/HV. Dùng Zoom riêng (mail cá nhân) hoặc Meet.</td></tr>
+              <tr><td><strong>TH2: Nhóm</strong></td><td>Tổng hợp lỗi chung DC, chữa chung. Thời lượng: 30 phút × số HV.</td></tr>
+              <tr><td><strong>TH3: Cả lớp</strong></td><td>Hỏi ý kiến cả lớp, vote lịch chung. Ai không đồng ý → vẫn sắp xếp 1:1 riêng. Lưu bằng chứng qua nhóm lớp.</td></tr>
+            </tbody>
+          </table>
+        </div></div>
+
+        <div class="step"><div class="sn t">3</div><div class="sb">
+          <div class="st t">Điểm danh phụ đạo trên Cổng ngay sau mỗi buổi</div>
+        </div></div>
+
+        <div class="step"><div class="sn t">4</div><div class="sb">
+          <div class="st t">Xử lý HV không tham gia dù đã confirm</div>
+          <ul class="b">
+            <li><strong>Lần 1:</strong> Nhắn riêng nhắc nhở, bù sang lần sau, cảnh báo lần 2 sẽ mất quyền lợi.</li>
+            <li><strong>Lần 2:</strong> Thông báo mất quyền lợi phụ đạo (lưu bằng chứng tin nhắn).</li>
+          </ul>
+          <div class="al al-r"><span class="al-i">📅</span><span>Thời hạn phụ đạo: trong khoá hoặc tối đa <strong>30 ngày kể từ buổi cuối</strong> của lớp. Sau 30 ngày không được tính lương.</span></div>
+        </div></div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ P8 ══ -->
+<div class="phase" id="p8">
+  <div class="ph orange" onclick="tog(this)">
+    <div class="ph-ico">📊</div>
+    <div class="ph-info">
+      <div class="ph-tag">Giai đoạn 8</div>
+      <div class="ph-title">Đánh giá giữa khoá – Sau buổi 10, hoàn thành trước buổi 12</div>
+      <div class="ph-sub">Hệ thống tự nhắc khi GV điểm danh buổi 10</div>
+    </div>
+    <div class="ph-arr">▶</div>
+  </div>
+  <div class="pb">
+    <div class="pb-inner">
+      <div class="steps">
+
+        <div class="step"><div class="sn a">1</div><div class="sb">
+          <div class="st a">Khi điểm danh buổi 10 → làm ngay đánh giá giữa khoá</div>
+          <p>Hệ thống hiển thị thông báo. Mở phần Đánh giá giữa khoá, điền đánh giá cho từng HV. Xem <a class="lk" href="https://docs.google.com/document/d/11rdR5pi5wJietJd1bW_UctAHhX_XBWKcdQGi8amx2yU/edit?tab=t.0" target="_blank">hướng dẫn chi tiết đánh giá giữa khoá</a>.</p>
+        </div></div>
+
+        <div class="step"><div class="sn a">2</div><div class="sb">
+          <div class="st a">Hoàn thành toàn bộ trước khi kết thúc buổi 12</div>
+          <div class="al al-r"><span class="al-i">⚠️</span><span>Sau buổi 12 mà chưa cập nhật đầy đủ → các buổi dạy liên quan <strong>không được tính lương</strong>. Không có ngoại lệ.</span></div>
+        </div></div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ P9 ══ -->
+<div class="phase" id="p9">
+  <div class="ph red" onclick="tog(this)">
+    <div class="ph-ico">🏁</div>
+    <div class="ph-info">
+      <div class="ph-tag">Giai đoạn 9</div>
+      <div class="ph-title">Cuối khoá – Test, nhập điểm, book Speaking, xử lý kết quả</div>
+      <div class="ph-sub">4 bước tuần tự · Điều kiện pass từng band · Hoàn thành / Test lại / Học lại</div>
+    </div>
+    <div class="ph-arr">▶</div>
+  </div>
+  <div class="pb">
+    <div class="pb-inner">
+      <div class="sh">BƯỚC 1 – CHUẨN BỊ & TỔ CHỨC TEST</div>
+      <div class="steps">
+
+        <div class="step"><div class="sn r">1</div><div class="sb">
+          <div class="st r">Gửi yêu cầu khi test cuối khoá cho HV</div>
+          <div class="dl">⏰ Tối thiểu <strong>2 ngày</strong> trước ngày thi · Đảm bảo 100% HV confirm</div>
+          <p>Tài liệu: <a class="lk" href="https://docs.google.com/document/d/1LBzDobgPjMZWEy5-MErJ9PFXIOvsjv3fnJj-gGjcxZc/edit?usp=sharing" target="_blank">Yêu cầu khi test cuối khoá</a></p>
+        </div></div>
+
+        <div class="step"><div class="sn r">2</div><div class="sb">
+          <div class="st r">Tổ chức test trên Cổng đào tạo</div>
+          <table class="t r" style="margin-top:6px">
+            <thead><tr><th>Kỹ năng</th><th>Cách thức</th></tr></thead>
+            <tbody>
+              <tr><td>Listening</td><td>GV bật audio cho cả lớp cùng nghe.</td></tr>
+              <tr><td>Reading</td><td>HV tự làm trên Cổng, GV set deadline đúng thời gian.</td></tr>
+              <tr><td>Writing</td><td>GV tạo folder Drive, duplicate link docs → HV làm trực tiếp → <strong>khoá quyền chỉnh sửa ngay khi hết giờ</strong> (bắt buộc).</td></tr>
+            </tbody>
+          </table>
+          <div class="al al-b"><span class="al-i">🏫</span><span><strong>Offline:</strong> Nhắc HV mang laptop sạc 100%, GV ngồi cuối lớp trông thi. <strong>Từ IFB trở lên:</strong> test Listening trong buổi Mock test; Final test chỉ R+W (2 tiếng).</span></div>
+          <div class="al al-y"><span class="al-i">🎬</span><span>GV vẫn record buổi test và up link trên Cổng.</span></div>
+          <div class="al al-r"><span class="al-i">⛔</span><span>Mọi vi phạm để tăng tỉ lệ pass (cho nghe quá số lần, sửa Writing sau giờ, test lại quá 2 lần...) → kỷ luật, cao nhất là <strong>dừng hợp đồng</strong>.</span></div>
+        </div></div>
+
+      </div>
+
+      <div class="sh">BƯỚC 2 – NHẬP ĐIỂM & NHẬN XÉT</div>
+      <div class="steps">
+        <div class="step"><div class="sn r">3</div><div class="sb">
+          <div class="st r">Nhập điểm và nhận xét lên Cổng đào tạo</div>
+          <div class="dl">⏰ <strong>Deadline: 5 ngày</strong> kể từ ngày test · Xem: <a class="lk" href="https://docs.google.com/document/d/12V9wEpboGMPmjjuTDeTv8G7ogYfgmVbv8Gq4Vf6dkbM/edit?usp=sharing" target="_blank">Quy trình nhập KQ test mới</a></div>
+          <table class="t r" style="margin-top:8px">
+            <thead><tr><th>Khoá</th><th>Cách ghi điểm</th></tr></thead>
+            <tbody>
+              <tr><td>PRE & 3–4</td><td>Ghi tổng số câu và số câu đúng</td></tr>
+              <tr><td>4–5, 5–6, 6–7</td><td>Ghi điểm quy đổi ra thang IELTS</td></tr>
+              <tr><td>Writing (tất cả)</td><td>Đính kèm link bài viết + nhận xét theo 4 tiêu chí + điểm cuối. Đạo văn &gt;30% = 0 điểm + học lại.</td></tr>
+            </tbody>
+          </table>
+          <div class="al al-y"><span class="al-i">✍️</span><span>Writing: Khoá 4–5 không cho điểm quá <strong>5.5</strong>. Các band trên không nên cao hơn <strong>0.5</strong> so với trình độ lớp. Bài dự định điểm cao → hỏi ban chuyên môn trước.</span></div>
+        </div></div>
+      </div>
+
+      <div class="sh">BƯỚC 3 – ĐIỀU KIỆN PASS & BOOK SPEAKING</div>
+      <div class="steps">
+        <div class="step"><div class="sn r">4</div><div class="sb">
+          <div class="st r">Điều kiện pass từng band để book Speaking</div>
+          <table class="t r" style="margin-top:6px">
+            <thead><tr><th>Band</th><th>Điều kiện pass 3 kỹ năng</th></tr></thead>
+            <tbody>
+              <tr><td>PRE</td><td>Grammar ≥ 35 câu</td></tr>
+              <tr><td>3.0–4.0</td><td>Listening ≥ 9 câu · Reading ≥ 9 câu · Writing ≥ 6 điểm</td></tr>
+              <tr><td>4.0–5.0</td><td>Overall ≥ 5.0 · Tối đa 2 kỹ năng 4.5</td></tr>
+              <tr><td>5.0–6.0</td><td>Overall ≥ 6.0 · Tối đa 2 kỹ năng 5.5</td></tr>
+              <tr><td>6.0–7.0</td><td>Overall ≥ 7.0 · L&R ≥ 7.0 · Không kỹ năng nào &lt; 6.0</td></tr>
+            </tbody>
+          </table>
+        </div></div>
+
+        <div class="step"><div class="sn r">5</div><div class="sb">
+          <div class="st r">Thông báo kết quả & hướng dẫn book Speaking</div>
+          <div class="dl">⏰ <strong>5 ngày</strong> kể từ ngày test</div>
+          <p>HV đủ điều kiện → GV chọn "Đủ điều kiện book test Speaking" trên Cổng → gửi <a class="lk" href="https://docs.google.com/document/d/1_ozqMb17m-cwC15ZD4hzJymhw94zLaiL3TGV2Kd0mb8/edit?tab=t.zanjtd8b7v36#heading=h.fsix6xhpw35p" target="_blank">link đăng ký Speaking</a> cho HV. Nhắc lại <a class="lk" href="https://docs.google.com/document/d/1rOLMGiAUyH8JjWds49wNxqxxSnsGnFGosGrsEhskwGw/edit?usp=sharing" target="_blank">quy chế thi Speaking</a>.</p>
+          <p style="margin-top:6px">HV chưa đủ điều kiện: test lại 3 kỹ năng → vẫn không đủ → chọn "Không đủ điều kiện test Speaking" trên Cổng. <a class="lk" href="https://drive.google.com/drive/folders/13IOCGOoIZgX4L0saa1-8XGCbQKn58aQ3?usp=sharing" target="_blank">Recording Speaking tham khảo</a></p>
+        </div></div>
+      </div>
+
+      <div class="sh">BƯỚC 4 – XỬ LÝ KẾT QUẢ SPEAKING</div>
+      <div class="steps">
+        <div class="step"><div class="sn r">6</div><div class="sb">
+          <div class="st r">Xử lý theo từng kết quả Speaking</div>
+          <table class="t r" style="margin-top:6px">
+            <thead><tr><th>Kết quả</th><th>GV cần làm</th></tr></thead>
+            <tbody>
+              <tr><td><span class="tg-g tag">Hoàn thành</span></td><td>HV lên band tiếp theo. Không cần thao tác thêm.</td></tr>
+              <tr><td><span class="tg-y tag">Test lại</span></td><td>Hướng dẫn HV book lại trong 10 ngày (quy trình như lần 1).</td></tr>
+              <tr><td><span class="tg-r tag">Học lại</span></td><td>GV có thể đề xuất test lại dựa trên thái độ + năng lực cả khoá. <strong>Chỉ được đề xuất 1 lần duy nhất.</strong> Gửi email đến <span style="background:#e8f1fb;padding:1px 6px;border-radius:4px;font-size:13.5px;color:#1a56a0;font-weight:600"><span style="font-family:monospace;color:#1a56a0;font-weight:600">langgospeakingtest&#64;gmail.com</span></span> · CC <span style="background:#e8f1fb;padding:1px 6px;border-radius:4px;font-size:13.5px;color:#1a56a0;font-weight:600"><span style="font-family:monospace;color:#1a56a0;font-weight:600">banvanhanh&#64;langgo.edu.vn</span></span> + <span style="background:#e8f1fb;padding:1px 6px;border-radius:4px;font-size:13.5px;color:#1a56a0;font-weight:600"><span style="font-family:monospace;color:#1a56a0;font-weight:600">hoand&#64;langgo.edu.vn</span></span>.</td></tr>
+            </tbody>
+          </table>
+          <div class="al al-r"><span class="al-i">📅</span><span>BVH chốt tỉ lệ lên band vào <strong>ngày 12 hàng tháng</strong>. Không có kết quả trước ngày 12 = <strong>auto tính Học lại toàn bộ</strong>.</span></div>
+
+      <div class="sh" style="margin-top:16px">XỬ LÝ HV VI PHẠM CAM KẾT / KHÔNG THAM GIA TEST</div>
+      <div class="steps">
+        <div class="step"><div class="sn r">7</div><div class="sb">
+          <div class="st r">HV thái độ không nghiêm túc / thiếu bài / nghỉ nhiều – Quy trình 3 bước bắt buộc</div>
+          <ul class="b">
+            <li><strong>B1:</strong> GV chủ động nhắc nhở tối thiểu <strong>4 lần</strong> qua tin nhắn (trong đó ≥1 lần quán triệt quy định cam kết). Lưu ảnh chụp làm minh chứng.</li>
+            <li><strong>B2:</strong> GV liên hệ TVV (Tư vấn viên) nhờ đôn đốc, nhắc nhở, hỏi thăm HV.</li>
+            <li><strong>B3:</strong> Thông báo tình hình HV tới BVH qua email.</li>
+          </ul>
+          <div class="al al-y"><span class="al-i">📧</span><span>Sau 3 bước trên: gửi email đề xuất không tính kết quả HV vào tỉ lệ lên band. Deadline: <strong>trước ngày 12 của tháng sau khi lớp kết thúc</strong>. VD: lớp kết thúc 17/9 → muộn nhất 11/10.</span></div>
+        </div></div>
+
+        <div class="step"><div class="sn r">8</div><div class="sb">
+          <div class="st r">HV không tham gia test cuối khoá</div>
+          <ul class="b">
+            <li>GV nhắc HV tối thiểu <strong>2 lần</strong> về việc tham gia test.</li>
+            <li>GV liên hệ TVV nhờ nhắc nhở thêm.</li>
+            <li>Sau 2 bước: gửi mail đề xuất không tính kết quả vào tỉ lệ lên band (trước ngày 12 của tháng sau khi lớp kết thúc).</li>
+          </ul>
+          <div class="al al-b"><span class="al-i">📝</span><span><strong>HV muốn học lại không test:</strong> HV tự viết email xin không test, tiêu đề: <em>"Đơn xin không tham gia đánh giá cuối khóa – [Tên HV] – [Mã lớp]"</em>, gửi BVH + CC GV. GV confirm bằng cách phản hồi email đó. (Kết quả học lại vẫn tính vào tỉ lệ lên band của GV.)</span></div>
+          <div class="al al-y"><span class="al-i">⚠️</span><span><strong>Riêng band 6.0–7.0:</strong> HV không tham gia test với mọi lý do đều không tính vào tỉ lệ lên band của GV (sau khi đã thực hiện đủ 2 bước nhắc nhở).</span></div>
+        </div></div>
+      </div>
+
+        </div></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══ P10 ══ -->
+<div class="phase" id="p10">
+  <div class="ph green" onclick="tog(this)">
+    <div class="ph-ico">🏆</div>
+    <div class="ph-info">
+      <div class="ph-tag">Giai đoạn 10</div>
+      <div class="ph-title">Sau khi lớp kết thúc – Nhận thưởng & Nhận lớp mới</div>
+      <div class="ph-sub">Lớp kiểu mẫu · Nâng bậc lương · Cập nhật lịch rảnh</div>
+    </div>
+    <div class="ph-arr">▶</div>
+  </div>
+  <div class="pb">
+    <div class="pb-inner">
+      <div class="steps">
+
+        <div class="step"><div class="sn g">1</div><div class="sb">
+          <div class="st g">Đề xuất Lớp Kiểu Mẫu (nếu đủ điều kiện)</div>
+          <div class="al al-g" style="margin-top:4px"><span class="al-i">✅</span><span>Điều kiện: <strong>100% HV lên band</strong> · Không có HV bảo lưu/bỏ học</span></div>
+          <div class="dl">⏰ Gửi email BVH <strong>trước ngày 5 hàng tháng</strong></div>
+          <p style="font-size:13.5px"><strong>Tiêu đề:</strong> Thông báo lớp đạt điều kiện lớp kiểu mẫu – [Mã lớp]<br>
+          <strong>CC:</strong> Nguyễn Diệu Hoa (trưởng BCM)<br>
+          <strong>Nội dung:</strong> tên GV, chức vụ, mã lớp, sĩ số, HV bảo lưu/bỏ học (0), tỉ lệ lên band (100%).<br>
+          BVH xác nhận → tiền thưởng chi cùng lương tháng liền kề.</p>
+        </div></div>
+
+        <div class="step"><div class="sn g">2</div><div class="sb">
+          <div class="st g">Đề xuất nâng bậc lương sớm (nếu đủ điều kiện)</div>
+          <div class="al al-g" style="margin-top:4px"><span class="al-i">✅</span><span>Điều kiện: A+ ≥ 5/6 tháng gần nhất · ≥ 5 lớp thường đã kết thúc (3 lớp GS = 1 lớp thường)</span></div>
+          <table class="t g" style="margin-top:8px">
+            <thead><tr><th>Đợt</th><th>Thời gian nộp</th><th>Kết quả trả về</th></tr></thead>
+            <tbody>
+              <tr><td>Đợt 1</td><td>1/1 – 15/1</td><td>Muộn nhất 31/1</td></tr>
+              <tr><td>Đợt 2</td><td>1/7 – 15/7</td><td>Muộn nhất 31/7</td></tr>
+            </tbody>
+          </table>
+          <p style="margin-top:6px;font-size:13.5px"><strong>Tiêu đề:</strong> [Tên GV] – Đề xuất nâng bậc lương sớm<br>
+          <strong>Nội dung:</strong> ngày bắt đầu nhận lớp, số tháng A+, số lớp đã kết thúc, đóng góp & cảm nhận 6 tháng gần nhất, mục tiêu thời gian tới.</p>
+        </div></div>
+
+        <div class="step"><div class="sn g">3</div><div class="sb">
+          <div class="st g">Cập nhật lịch rảnh để nhận lớp mới</div>
+          <p>Vào Cổng đào tạo cập nhật, hoặc nhắn trực tiếp BVH. Nên làm <strong>trước khi lớp kết thúc 1–2 buổi</strong> để không bị gián đoạn.</p>
+        </div></div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══ P10b – TẠM DỪNG & NGHỈ VIỆC ══ -->
+
+
+
+<!-- ══ P13 – MỚI ══ -->
+<div class="phase" id="p13">
+  <div class="ph orange" onclick="tog(this)">
+    <div class="ph-ico">📅</div>
+    <div class="ph-info">
+      <div class="ph-tag">Tham chiếu</div>
+      <div class="ph-title">Đổi lịch · Tạm dừng · Nghỉ việc – Quy trình & Email mẫu</div>
+      <div class="ph-sub">Xin nghỉ buổi · Tạm dừng tối đa 4 tháng · Nghỉ việc báo trước 1 tháng</div>
+    </div>
+    <div class="ph-arr">▶</div>
+  </div>
+  <div class="pb">
+    <div class="pb-inner">
+      <div class="steps">
+
+        <div class="step"><div class="sn a">1</div><div class="sb">
+          <div class="st a">Xin nghỉ buổi / Đổi lịch học</div>
+          <ul class="b">
+            <li>Nghỉ <strong>1 buổi</strong>: báo BVH qua email trước tối thiểu <strong>24 tiếng</strong>.</li>
+            <li>Nghỉ <strong>2 buổi</strong>: báo trước tối thiểu <strong>3 ngày</strong>.</li>
+            <li>Bất khả kháng nghỉ đột xuất: báo HV và BVH ngay khi có thể + gửi email giải trình chi tiết đến <span style="background:#e8f1fb;padding:1px 6px;border-radius:4px;font-size:13.5px;color:#1a56a0;font-weight:600"><span style="font-family:monospace;color:#1a56a0;font-weight:600">banvanhanh&#64;langgo.edu.vn</span></span>.</li>
+            <li>Phải thông báo cho HV và có kế hoạch dạy bù.</li>
+          </ul>
+          <div class="al al-r"><span class="al-i">⚠️</span>
+            <div>Mỗi lớp chỉ được đổi lịch <strong>tối đa 3 lần</strong> (bao gồm lễ tết). Tiêu đề email: <em>"Đổi lịch học lớp ___ lần 1/2/3"</em>.<br>
+            Từ lần 4 trở đi phải được BVH duyệt mail. Nếu chưa được duyệt, mọi khiếu nại từ HV GV phải tự chịu trách nhiệm.</div>
+          </div>
+        </div></div>
+
+        <div class="step"><div class="sn a">2</div><div class="sb">
+          <div class="st a">Xin tạm dừng giảng dạy (tối đa 4 tháng)</div>
+          <p>Gửi email đến <strong><span style="background:#e8f1fb;padding:1px 6px;border-radius:4px;font-size:13.5px;color:#1a56a0;font-weight:600"><span style="font-family:monospace;color:#1a56a0;font-weight:600">banvanhanh&#64;langgo.edu.vn</span></span></strong> và <strong><span style="background:#e8f1fb;padding:1px 6px;border-radius:4px;font-size:13.5px;color:#1a56a0;font-weight:600"><span style="font-family:monospace;color:#1a56a0;font-weight:600">headteacher&#64;langgo.edu.vn</span></span></strong></p>
+          <ul class="b">
+            <li><strong>Tiêu đề:</strong> [Họ tên GV] – Xin tạm dừng giảng dạy từ ngày ... đến ngày ...</li>
+            <li><strong>Nội dung:</strong> Lý do tạm dừng + Thời gian cụ thể (ngày bắt đầu – ngày quay lại). Thời gian không quá 4 tháng.</li>
+          </ul>
+          <div class="al al-r"><span class="al-i">⚠️</span><span>Tạm dừng quá 4 tháng mà không quay lại hoặc không liên hệ BCM/BVH → <strong>mặc định chấm dứt hợp đồng</strong>.</span></div>
+        </div></div>
+
+        <div class="step"><div class="sn a">3</div><div class="sb">
+          <div class="st a">Xin nghỉ việc (từ phía GV)</div>
+          <ul class="b">
+            <li>Báo trước tối thiểu <strong>1 tháng</strong> và dạy hết các lớp đang dở để nhận lương tháng đó.</li>
+            <li>Nghỉ đột xuất: trung tâm có quyền <strong>huỷ lương chưa thanh toán</strong>.</li>
+            <li>Sau khi gửi email xin nghỉ và hoàn thành lớp → chủ động <strong>out khỏi tất cả group chung</strong> (Facebook, Zalo).</li>
+          </ul>
+          <p style="margin-top:8px;font-size:13.5px"><strong>Gửi email đến:</strong><br>
+          Ban Vận hành – <span style="background:#e8f1fb;padding:1px 6px;border-radius:4px;font-size:13.5px;color:#1a56a0;font-weight:600"><span style="font-family:monospace;color:#1a56a0;font-weight:600">banvanhanh&#64;langgo.edu.vn</span></span><br>
+          Ban Chuyên môn – <span style="background:#e8f1fb;padding:1px 6px;border-radius:4px;font-size:13.5px;color:#1a56a0;font-weight:600"><span style="font-family:monospace;color:#1a56a0;font-weight:600">headteacher&#64;langgo.edu.vn</span></span><br>
+          Ban Nhân sự – <span style="background:#e8f1fb;padding:1px 6px;border-radius:4px;font-size:13.5px;color:#1a56a0;font-weight:600"><span style="font-family:monospace;color:#1a56a0;font-weight:600">bannhansu&#64;hbrholdings.vn</span></span><br>
+          CC: Chị Diệu Hoa – <span style="background:#e8f1fb;padding:1px 6px;border-radius:4px;font-size:13.5px;color:#1a56a0;font-weight:600"><span style="font-family:monospace;color:#1a56a0;font-weight:600">hoand&#64;langgo.edu.vn</span></span></p>
+        </div></div>
+
+        <div class="step"><div class="sn a">4</div><div class="sb">
+          <div class="st a">Trường hợp trung tâm chủ động chấm dứt hợp đồng</div>
+          <ul class="b">
+            <li>GV gian dối, fake thông tin bằng cấp/thông tin uy tín → <strong>chấm dứt ngay</strong>, tiền cọc đào tạo không hoàn lại, lương tháng đang dở bị huỷ.</li>
+            <li>Chất lượng giảng dạy không đảm bảo dù đã feedback (kèm training) ≥ 2 lần → GV vẫn dạy hết lớp dang dở (nếu TT yêu cầu) để nhận lương tháng đó.</li>
+          </ul>
+        </div></div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ P11 ══ -->
+<div class="phase" id="p11">
+  <div class="ph" onclick="tog(this)">
+    <div class="ph-ico">📞</div>
+    <div class="ph-info">
+      <div class="ph-tag">Tham chiếu</div>
+      <div class="ph-title">Đầu mối liên hệ – Gặp vấn đề gì, hỏi ai?</div>
+      <div class="ph-sub">Tra cứu nhanh khi cần hỗ trợ</div>
+    </div>
+    <div class="ph-arr">▶</div>
+  </div>
+  <div class="pb">
+    <div class="pb-inner">
+      <div class="cgrid">
+        <div class="ccard"><div class="crole">Headteacher – Chuyên môn</div><div class="cname">Ms. Hoa</div><div class="cphone">0988 253 313</div><div class="cname" style="margin-top:5px">Ms. Phương</div><div class="cphone">0347 033 123</div><div class="cname" style="margin-top:5px">Ms. Hải</div><div class="cphone">0346 509 168</div><div class="cnote">Tài liệu, quy trình, chuyên môn, lần đầu dạy band mới</div></div>
+        <div class="ccard"><div class="crole">Test cuối khoá</div><div class="cname">Mr. Trần Duy Long</div><div class="cphone">0981 517 826</div><div class="cnote">Mọi vấn đề về test Speaking cuối khoá</div></div>
+        <div class="ccard"><div class="crole">Ban Vận Hành</div><div class="cname">Ms. Hương</div><div class="cphone">0949 189 966</div><div class="cnote">Sắp lớp, khai giảng, tính lương, tài khoản Zoom</div><div class="cname" style="margin-top:6px">Ms. Quỳnh</div><div class="cphone">086 721 8166</div><div class="cnote">Feedback HV, chăm sóc HV, vấn đề lớp Offline</div></div>
+        <div class="ccard"><div class="crole">Ban Công nghệ – Cổng</div><div class="cname">Lỗi không khẩn cấp</div><div class="cphone" style="font-size:13px;font-weight:600"><a class="lk" href="https://docs.google.com/forms/d/e/1FAIpQLSefzRq3GqEaTIRtRNlpj9TZEfYkc2MHGdfU-auxeEp2Zu0Qqg/viewform" target="_blank">→ Điền form báo lỗi</a></div><div class="cname" style="margin-top:5px">Trần Thu An (khẩn)</div><div class="cphone">0339 033 285</div><div class="cnote">Lỗi Writify: HV nhắn thẳng trên web Writify</div></div>
+        <div class="ccard"><div class="crole">Hoa hồng giới thiệu HV</div><div class="cname">Ms. Trang</div><div class="cphone">0346 686 728</div><div class="cnote">Nhắn trước khi HV đăng ký</div></div>
+      </div>
+      <div class="al al-y" style="margin-top:12px"><span class="al-i">⚠️</span><span>HV hỏi về bảo lưu, đổi lịch, xin học band khác → báo HV liên hệ <strong>Cố vấn học tập</strong>. GV không tự quyết định.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ P12 ══ -->
+<div class="phase" id="p12">
+  <div class="ph red" onclick="tog(this)">
+    <div class="ph-ico">⚖️</div>
+    <div class="ph-info">
+      <div class="ph-tag">Tham chiếu</div>
+      <div class="ph-title">Tổng hợp Quy định & Kỷ luật</div>
+      <div class="ph-sub">Tra cứu nhanh tất cả các mức phạt</div>
+    </div>
+    <div class="ph-arr">▶</div>
+  </div>
+  <div class="pb">
+    <div class="pb-inner">
+      <table class="t r pen">
+        <thead><tr><th>Vi phạm</th><th>Lần 1</th><th>Lần 2</th><th>Lần 3+</th></tr></thead>
+        <tbody>
+          <tr><td>Để HV ngoài DS vào học</td><td>Trừ 1 bậc NQ</td><td>Xuống bậc thấp nhất</td><td>Khấu trừ lương theo HĐ</td></tr>
+          <tr><td>Điểm danh thiếu/sai thực tế</td><td colspan="3" style="text-align:center">1 lỗi/lần → ảnh hưởng điểm NQ</td></tr>
+          <tr><td>Buổi học bị khoá điểm danh (quá 48h)</td><td colspan="3" style="text-align:center">Không được tính lương buổi đó</td></tr>
+          <tr><td>Chấm DC không đảm bảo chất lượng</td><td>Hạ NQ thấp nhất</td><td>Hạ NQ + trừ 10% lương</td><td>Trừ 30% lương + dừng HĐ</td></tr>
+          <tr><td>Đánh giá giữa khoá muộn/bỏ</td><td colspan="3" style="text-align:center">Các buổi liên quan không tính lương</td></tr>
+          <tr><td>Vi phạm quy trình test cuối khoá</td><td colspan="3" style="text-align:center">Kỷ luật · Cao nhất: dừng HĐ</td></tr>
+          <tr><td>Tạo nhóm chat riêng với HV</td><td colspan="3" style="text-align:center">Xem xét chấm dứt HĐ ngay</td></tr>
+          <tr><td>[Offline] Không hướng dẫn xếp ghế/vệ sinh</td><td>Nhắc nhở</td><td>50.000đ/lần</td><td>100.000đ/lần</td></tr>
+          <tr><td>[Offline] Quên tắt điện/quạt/điều hoà</td><td colspan="3" style="text-align:center">200.000đ/lần</td></tr>
+          <tr><td>[Offline] Đi muộn/về sớm &lt;10 phút</td><td colspan="3" style="text-align:center">20.000đ/lần</td></tr>
+          <tr><td>[Offline] Đi muộn/về sớm 10–15 phút</td><td colspan="3" style="text-align:center">50.000đ/lần</td></tr>
+          <tr><td>[Offline] Đi muộn/về sớm &gt;15 phút</td><td colspan="3" style="text-align:center">100.000đ/lần</td></tr>
+          <tr><td>[Offline] Quên chấm công</td><td>Nhắc</td><td>Nhắc</td><td>100.000đ/lần</td></tr>
+        </tbody>
+      </table>
+      <div class="al al-b" style="margin-top:10px"><span class="al-i">📄</span><span>Đọc đầy đủ: <a class="lk" href="https://docs.google.com/spreadsheets/d/1jW0qojowho16qu95QW4UARgXJPxhbki6gj9RQ51TiPM/edit?usp=sharing" target="_blank">Bảng quy định điểm nội quy & tỷ lệ lên band</a></span></div>
+      <div class="al al-gr" style="margin-top:8px"><span class="al-i">📌</span><span>Bất khả kháng dẫn đến vi phạm → gửi email ngay cho BVH, ghi rõ nguyên nhân + dẫn chứng.</span></div>
+    </div>
+  </div>
+</div>
+
+<div style="text-align:center;color:var(--gray);font-size:12px;padding:24px 0 8px">Cẩm Nang Giảng Viên LangGo · Tài liệu nội bộ · Không chia sẻ ra ngoài</div>
+</div>
+
+<!-- EDIT TOOLBAR -->
+<div id="etb">
+  <div id="etb-hint">👆 Click vào chữ bất kỳ để sửa</div>
+  <div class="etb-row">
+    <button class="etb-btn" id="btn-settings" onclick="openSettings()" title="Cài đặt GitHub" style="background:#f1f5f9;color:#475569;padding:10px 13px">⚙️</button>
+    <button class="etb-btn" id="btn-edit" onclick="askPassword()">✏️ Chỉnh sửa</button>
+    <button class="etb-btn" id="btn-save" onclick="saveFile()" style="display:none">⬇️ Tải về</button>
+    <button class="etb-btn" id="btn-push" onclick="pushToGithub()" style="display:none;background:#16a34a;color:#fff">💾 Lưu lên web</button>
+  </div>
+</div>
+
+<!-- PASSWORD MODAL -->
+<div id="pw-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:99999;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:16px;padding:28px 32px;width:320px;box-shadow:0 8px 40px rgba(0,0,0,.2);text-align:center">
+    <div style="font-size:28px;margin-bottom:10px">🔐</div>
+    <div style="font-weight:700;font-size:16px;color:#1e293b;margin-bottom:6px">Xác nhận quyền chỉnh sửa</div>
+    <div style="font-size:13px;color:#64748b;margin-bottom:18px">Chỉ dành cho quản trị viên</div>
+    <input id="pw-input" type="password" placeholder="Nhập mật khẩu..." 
+      style="width:100%;border:1.5px solid #e2e8f0;border-radius:10px;padding:10px 14px;font-size:14px;outline:none;margin-bottom:12px;font-family:inherit"
+      onkeydown="if(event.key==='Enter')checkPassword()">
+    <div id="pw-error" style="color:#dc2626;font-size:12.5px;margin-bottom:10px;display:none">❌ Mật khẩu không đúng</div>
+    <div style="display:flex;gap:10px">
+      <button onclick="closePw()" 
+        style="flex:1;padding:10px;border-radius:10px;border:1.5px solid #e2e8f0;background:#f8fafc;cursor:pointer;font-size:13.5px;font-weight:600;color:#64748b">
+        Huỷ
+      </button>
+      <button onclick="checkPassword()" 
+        style="flex:1;padding:10px;border-radius:10px;border:none;background:#1a56a0;color:#fff;cursor:pointer;font-size:13.5px;font-weight:700">
+        Xác nhận
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── ACCORDION ──
+function tog(hdr){
+  const pb=hdr.nextElementSibling;
+  const arr=hdr.querySelector('.ph-arr');
+  const isOpen=pb.classList.contains('open');
+  pb.classList.toggle('open',!isOpen);
+  arr.classList.toggle('open',!isOpen);
+}
+
+// ── SEARCH & EDIT – init after DOM ──
+// ── PASSWORD ──
+  var ADMIN_PW = 'langgo2025';
+  var pwUnlocked = false;
+
+  window.askPassword = function(){
+    if(pwUnlocked){ toggleEdit(); return; }
+    document.getElementById('pw-overlay').style.display = 'flex';
+    document.getElementById('pw-error').style.display = 'none';
+    document.getElementById('pw-input').value = '';
+    setTimeout(function(){ document.getElementById('pw-input').focus(); }, 100);
+  };
+
+  window.checkPassword = function(){
+    var val = document.getElementById('pw-input').value;
+    if(val === ADMIN_PW){
+      pwUnlocked = true;
+      closePw();
+      toggleEdit();
+    } else {
+      document.getElementById('pw-error').style.display = 'block';
+      document.getElementById('pw-input').value = '';
+      document.getElementById('pw-input').focus();
+    }
+  };
+
+  window.closePw = function(){
+    document.getElementById('pw-overlay').style.display = 'none';
+  };
+
+  document.addEventListener('DOMContentLoaded', function(){
+  // Open first phase
+  const first = document.querySelector('.ph');
+  if(first) tog(first);
+
+  // SEARCH
+  const searchInput  = document.getElementById('search-input');
+  const searchClear  = document.getElementById('search-clear');
+  const searchCount  = document.getElementById('search-count');
+  const searchNav    = document.getElementById('search-nav');
+  const btnPrev      = document.getElementById('btn-prev');
+  const btnNext      = document.getElementById('btn-next');
+  const noResults    = document.getElementById('no-results');
+  const phases       = document.querySelectorAll('.phase');
+
+  // Cache original HTML of each phase body
+  const origHTML = new Map();
+  phases.forEach(function(p){
+    const inner = p.querySelector('.pb-inner');
+    if(inner) origHTML.set(p, inner.innerHTML);
+  });
+
+  let searchTimeout;
+  let allMarks = [];   // all <mark> elements after search
+  let curMark  = -1;   // index of currently highlighted mark
+
+  searchInput.addEventListener('input', function(){
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(doSearch, 200);
+  });
+
+  function escapeReg(s){
+    return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+  }
+
+  function doSearch(){
+    const q = searchInput.value.trim();
+    searchClear.style.display = q ? 'block' : 'none';
+
+    // Restore original HTML
+    phases.forEach(function(p){
+      const inner = p.querySelector('.pb-inner');
+      if(inner && origHTML.has(p)) inner.innerHTML = origHTML.get(p);
+      p.style.display = '';
+      p.querySelector('.pb').classList.remove('open');
+      p.querySelector('.ph-arr').classList.remove('open');
+    });
+    allMarks = []; curMark = -1;
+    updateNav();
+
+    if(!q){
+      noResults.style.display = 'none';
+      const f = document.querySelector('.ph'); if(f) tog(f);
+      return;
+    }
+
+    try {
+      const regex = new RegExp(escapeReg(q), 'gi');
+      let total = 0, visible = 0;
+
+      phases.forEach(function(p){
+        const inner  = p.querySelector('.pb-inner');
+        const hdrEl  = p.querySelector('.ph-info');
+        if(!inner) return;
+        const bodyTxt = inner.textContent || '';
+        const hdrTxt  = hdrEl ? hdrEl.textContent : '';
+        const bodyHit = (bodyTxt.match(regex)||[]).length;
+        const hdrHit  = regex.test(hdrTxt); regex.lastIndex = 0;
+
+        if(bodyHit === 0 && !hdrHit){ p.style.display = 'none'; return; }
+
+        highlightNode(inner, regex);
+        p.querySelector('.pb').classList.add('open');
+        p.querySelector('.ph-arr').classList.add('open');
+        total += bodyHit; visible++;
+      });
+
+      // Collect all marks
+      allMarks = Array.from(document.querySelectorAll('mark'));
+      noResults.style.display = visible === 0 ? 'block' : 'none';
+
+      if(allMarks.length > 0){
+        curMark = 0;
+        scrollToMark(0);
+      }
+      updateNav();
+    } catch(e){}
+  }
+
+  function scrollToMark(idx){
+    allMarks.forEach(function(m){ m.classList.remove('current'); });
+    if(idx < 0 || idx >= allMarks.length) return;
+    allMarks[idx].classList.add('current');
+    // Smooth scroll with offset for sticky search bar
+    const el = allMarks[idx];
+    const top = el.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({ top: top, behavior: 'smooth' });
+  }
+
+  function updateNav(){
+    const total = allMarks.length;
+    if(total === 0){
+      searchNav.style.display = 'none';
+      return;
+    }
+    searchNav.style.display = 'flex';
+    searchCount.textContent = (curMark + 1) + ' / ' + total;
+    btnPrev.disabled = curMark <= 0;
+    btnNext.disabled = curMark >= total - 1;
+  }
+
+  window.navResult = function(dir){
+    const next = curMark + dir;
+    if(next < 0 || next >= allMarks.length) return;
+    curMark = next;
+    scrollToMark(curMark);
+    updateNav();
+  };
+
+  function highlightNode(node, regex){
+    if(node.nodeType === 3){
+      const text = node.textContent;
+      if(!regex.test(text)){ regex.lastIndex=0; return; }
+      regex.lastIndex = 0;
+      const frag = document.createDocumentFragment();
+      let last = 0, m;
+      while((m = regex.exec(text)) !== null){
+        if(m.index > last) frag.appendChild(document.createTextNode(text.slice(last, m.index)));
+        const mark = document.createElement('mark');
+        mark.textContent = m[0];
+        frag.appendChild(mark);
+        last = regex.lastIndex;
+      }
+      if(last < text.length) frag.appendChild(document.createTextNode(text.slice(last)));
+      node.parentNode.replaceChild(frag, node);
+    } else if(node.nodeType === 1 && !['SCRIPT','STYLE','A','BUTTON'].includes(node.tagName)){
+      Array.from(node.childNodes).forEach(function(ch){ highlightNode(ch, regex); });
+    }
+  }
+
+  window.clearSearch = function(){
+    searchInput.value = '';
+    searchClear.style.display = 'none';
+    allMarks = []; curMark = -1;
+    updateNav();
+    noResults.style.display = 'none';
+    phases.forEach(function(p){
+      const inner = p.querySelector('.pb-inner');
+      if(inner && origHTML.has(p)) inner.innerHTML = origHTML.get(p);
+      p.style.display = '';
+      p.querySelector('.pb').classList.remove('open');
+      p.querySelector('.ph-arr').classList.remove('open');
+    });
+    const f = document.querySelector('.ph'); if(f) tog(f);
+    searchInput.focus();
+  };
+
+  // EDIT MODE
+  // EDITABLE: walk all elements inside pb-inner, make leaf text nodes editable
+  const EDITABLE_ROOT = 'body'; // entire page
+  let editOn = false;
+
+  // Walk every element in <body>, make leaf text nodes editable
+  function makeEditable(root){
+    var SKIP = '#etb,#search-bar,#cb-win,.toc,#no-results,script,style,button,a,.ph-arr,.sn,.al-i,.ph-ico,.cb-chip,.toc-pills';
+    var SKIP_TAGS = new Set(['SCRIPT','STYLE','BUTTON','A','INPUT','TEXTAREA','SELECT','IFRAME']);
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT);
+    var el;
+    while((el = walker.nextNode())){
+      if(SKIP_TAGS.has(el.tagName)) continue;
+      if(el.closest(SKIP)) continue;
+      if(el.getAttribute('contenteditable')) continue;
+      // Has at least one direct non-empty text node?
+      var hasTxt = Array.from(el.childNodes).some(function(c){
+        return c.nodeType === 3 && c.textContent.trim().length > 0;
+      });
+      if(hasTxt){
+        el.setAttribute('contenteditable','true');
+        el.setAttribute('spellcheck','false');
+      }
+    }
+  }
+
+  window.toggleEdit = function(){
+    editOn = !editOn;
+    const btn  = document.getElementById('btn-edit');
+    const sv   = document.getElementById('btn-save');
+    const hint = document.getElementById('etb-hint');
+    if(editOn){
+      // Open all phases
+      phases.forEach(function(p){
+        p.querySelector('.pb').classList.add('open');
+        p.querySelector('.ph-arr').classList.add('open');
+      });
+      // Make all text-bearing elements inside pb-inner editable
+      // Walk all elements inside pb-inner, make any that directly contain text editable
+      document.querySelectorAll(EDITABLE_ROOT).forEach(function(root){
+        makeEditable(root);
+      });
+      btn.textContent = '🔒 Tắt chỉnh sửa'; btn.classList.add('on');
+      sv.style.display = 'flex'; document.getElementById('btn-push').style.display='flex'; hint.style.display = 'block';
+      setTimeout(function(){ hint.style.display='none'; }, 3000);
+    } else {
+      document.querySelectorAll('[contenteditable]').forEach(function(el){
+        el.removeAttribute('contenteditable');
+      });
+      btn.textContent = '✏️ Bật chỉnh sửa'; btn.classList.remove('on');
+      sv.style.display = 'none'; document.getElementById('btn-push').style.display='none'; hint.style.display = 'none';
+    }
+  };
+
+  window.saveFile = function(){
+    const clone = document.documentElement.cloneNode(true);
+    clone.querySelectorAll('[contenteditable]').forEach(function(el){ el.removeAttribute('contenteditable'); });
+    clone.querySelectorAll('mark').forEach(function(m){ m.replaceWith(document.createTextNode(m.textContent)); });
+    const tb = clone.querySelector('#etb'); if(tb) tb.remove();
+    const toast = clone.querySelector('#push-toast'); if(toast) toast.remove();
+    const blob = new Blob(['<!DOCTYPE html>\n'+clone.outerHTML], {type:'text/html;charset=utf-8'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'index.html';
+    a.click(); URL.revokeObjectURL(a.href);
+    showToast('✅ Đã tải về!', '#16a34a');
+  };
+
+  function getCleanHTML(){
+    const clone = document.documentElement.cloneNode(true);
+    clone.querySelectorAll('[contenteditable]').forEach(function(el){ el.removeAttribute('contenteditable'); });
+    clone.querySelectorAll('mark').forEach(function(m){ m.replaceWith(document.createTextNode(m.textContent)); });
+    const tb = clone.querySelector('#etb'); if(tb) tb.remove();
+    const toast = clone.querySelector('#push-toast'); if(toast) toast.remove();
+    return '<!DOCTYPE html>\n' + clone.outerHTML;
+  }
+
+  function showToast(msg, bg){
+    var t = document.getElementById('push-toast');
+    t.textContent = msg;
+    t.style.cssText = 'position:fixed;bottom:80px;right:20px;background:'+bg+';color:#fff;padding:11px 20px;border-radius:22px;font-size:13px;font-weight:700;z-index:99999;box-shadow:0 4px 14px rgba(0,0,0,.2);display:flex;align-items:center;gap:8px';
+    setTimeout(function(){ t.style.display='none'; }, 3500);
+  }
+
+  window.pushToGithub = async function(){
+    var btn = document.getElementById('btn-push');
+    btn.textContent = '⏳ Đang lưu...';
+    btn.disabled = true;
+    showToast('⏳ Đang cập nhật lên web...', '#1a56a0');
+    try {
+      var TOKEN = localStorage.getItem('gh_token') || '';
+      var REPO  = localStorage.getItem('gh_repo')  || '';
+      var FILE  = 'index.html';
+      if(!TOKEN || !REPO){
+        showToast('❌ Chưa cài đặt token. Vui lòng vào ⚙️ Cài đặt.', '#dc2626');
+        btn.textContent = '💾 Lưu lên web'; btn.disabled = false; return;
+      }
+      var API   = 'https://api.github.com/repos/'+REPO+'/contents/'+FILE;
+
+      // Get current SHA
+      var shaRes = await fetch(API, {
+        headers: { 'Authorization': 'token '+TOKEN, 'Accept': 'application/vnd.github.v3+json' }
+      });
+      var shaData = await shaRes.json();
+      var sha = shaData.sha;
+
+      // Encode content to base64
+      var content = getCleanHTML();
+      var encoded = btoa(unescape(encodeURIComponent(content)));
+
+      // Push
+      var pushRes = await fetch(API, {
+        method: 'PUT',
+        headers: {
+          'Authorization': 'token '+TOKEN,
+          'Accept': 'application/vnd.github.v3+json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          message: 'Update cam nang GV',
+          content: encoded,
+          sha: sha
+        })
+      });
+
+      if(pushRes.ok){
+        showToast('✅ Đã lưu! GV F5 sau 30 giây là thấy.', '#16a34a');
+      } else {
+        var err = await pushRes.json();
+        showToast('❌ Lỗi: ' + (err.message||'Không rõ'), '#dc2626');
+      }
+    } catch(e){
+      showToast('❌ Không kết nối được GitHub', '#dc2626');
+    }
+    btn.textContent = '💾 Lưu lên web';
+    btn.disabled = false;
+  };
+});
+</script>
+
+
+<!-- SETTINGS MODAL -->
+<div id="settings-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:99999;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:16px;padding:28px 32px;width:380px;box-shadow:0 8px 40px rgba(0,0,0,.2)">
+    <div style="font-size:22px;margin-bottom:6px">⚙️ Cài đặt GitHub</div>
+    <div style="font-size:13px;color:#64748b;margin-bottom:20px">Chỉ lưu trên máy bạn, không ai khác thấy được</div>
+    <div style="margin-bottom:14px">
+      <label style="font-size:13px;font-weight:700;color:#1e293b;display:block;margin-bottom:5px">GitHub Token</label>
+      <input id="s-token" type="password" placeholder="ghp_..." 
+        style="width:100%;border:1.5px solid #e2e8f0;border-radius:10px;padding:9px 13px;font-size:13.5px;outline:none;font-family:monospace">
+    </div>
+    <div style="margin-bottom:20px">
+      <label style="font-size:13px;font-weight:700;color:#1e293b;display:block;margin-bottom:5px">GitHub Repo</label>
+      <input id="s-repo" type="text" placeholder="username/repo-name"
+        style="width:100%;border:1.5px solid #e2e8f0;border-radius:10px;padding:9px 13px;font-size:13.5px;outline:none;font-family:monospace">
+      <div style="font-size:12px;color:#94a3b8;margin-top:4px">VD: hoand-bot/C-m-nang-GV</div>
+    </div>
+    <div style="display:flex;gap:10px">
+      <button onclick="closeSettings()"
+        style="flex:1;padding:10px;border-radius:10px;border:1.5px solid #e2e8f0;background:#f8fafc;cursor:pointer;font-size:13.5px;font-weight:600;color:#64748b">
+        Huỷ
+      </button>
+      <button onclick="saveSettings()"
+        style="flex:1;padding:10px;border-radius:10px;border:none;background:#1a56a0;color:#fff;cursor:pointer;font-size:13.5px;font-weight:700">
+        💾 Lưu cài đặt
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="push-toast"></div>
+</body>
+</html>
