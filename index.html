@@ -1447,6 +1447,41 @@ function tog(hdr){
     btn.textContent = '💾 Lưu lên web';
     btn.disabled = false;
   };
+
+  // ── SETTINGS ──
+  window.openSettings = function(){
+    document.getElementById('s-token').value = localStorage.getItem('gh_token') || '';
+    document.getElementById('s-repo').value   = localStorage.getItem('gh_repo')  || '';
+    document.getElementById('settings-overlay').style.display = 'flex';
+    setTimeout(function(){ document.getElementById('s-token').focus(); }, 100);
+  };
+
+  window.closeSettings = function(){
+    document.getElementById('settings-overlay').style.display = 'none';
+  };
+
+  window.saveSettings = function(){
+    var token = document.getElementById('s-token').value.trim();
+    var repo  = document.getElementById('s-repo').value.trim();
+    if(!token || !repo){ alert('Vui lòng điền đủ Token và Repo!'); return; }
+    localStorage.setItem('gh_token', token);
+    localStorage.setItem('gh_repo',  repo);
+    closeSettings();
+    showToast('✅ Đã lưu cài đặt!', '#16a34a');
+  };
+
+  // Close modal when clicking overlay background
+  document.getElementById('settings-overlay').addEventListener('click', function(e){
+    if(e.target === this) closeSettings();
+  });
+
+  // Enter key in settings inputs
+  ['s-token','s-repo'].forEach(function(id){
+    document.getElementById(id).addEventListener('keydown', function(e){
+      if(e.key === 'Enter') window.saveSettings();
+    });
+  });
+
 });
 </script>
 
