@@ -1489,6 +1489,17 @@ function tog(hdr){
 </script>
 
 
+<!-- EDIT TOOLBAR -->
+<div id="etb">
+  <div id="etb-hint">👆 Click vào chữ bất kỳ để sửa</div>
+  <div class="etb-row">
+    <button class="etb-btn" id="btn-settings" onclick="openSettings()" title="Cài đặt GitHub" style="background:#f1f5f9;color:#475569;padding:10px 13px">⚙️</button>
+    <button class="etb-btn" id="btn-edit" onclick="askPassword()">✏️ Chỉnh sửa</button>
+    <button class="etb-btn" id="btn-save" onclick="saveFile()" style="display:none">⬇️ Tải về</button>
+    <button class="etb-btn" id="btn-push" onclick="pushToGithub()" style="display:none;background:#16a34a;color:#fff">💾 Lưu lên web</button>
+  </div>
+</div>
+
 <!-- SETTINGS MODAL -->
 <div id="settings-overlay" style="display: none; position: fixed; inset: 0px; background: rgba(0, 0, 0, 0.45); z-index: 99999; align-items: center; justify-content: center;">
   <div style="background:#fff;border-radius:16px;padding:28px 32px;width:380px;box-shadow:0 8px 40px rgba(0,0,0,.2)">
