@@ -161,12 +161,12 @@ a.lk:hover{text-decoration:underline}
   <div class="search-wrap">
     <span id="search-icon">🔍</span>
     <input id="search-input" type="text" placeholder="Tìm kiếm nhanh... (VD: deadline, điểm danh, recording)" autocomplete="off">
-    <button id="search-clear" onclick="clearSearch()" title="Xoá" style="display: block;">×</button>
+    <button id="search-clear" onclick="clearSearch()" title="Xoá">×</button>
   </div>
-  <div id="search-nav" style="display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
-    <span id="search-count" style="font-size:12px;color:#64748b;white-space:nowrap">1 / 1</span>
-    <button id="btn-prev" onclick="navResult(-1)" title="Kết quả trước" disabled="">◀</button>
-    <button id="btn-next" onclick="navResult(1)" title="Kết quả tiếp theo" disabled="">▶</button>
+  <div id="search-nav" style="display:none;align-items:center;gap:6px;flex-shrink:0">
+    <span id="search-count" style="font-size:12px;color:#64748b;white-space:nowrap"></span>
+    <button id="btn-prev" onclick="navResult(-1)" title="Kết quả trước">◀</button>
+    <button id="btn-next" onclick="navResult(1)" title="Kết quả tiếp theo">▶</button>
   </div>
 </div>
 
@@ -192,10 +192,10 @@ a.lk:hover{text-decoration:underline}
 </div>
 
 <div class="content">
-<div class="no-results" id="no-results" style="display: none;">Không tìm thấy kết quả nào. Thử từ khoá khác nhé.</div>
+<div class="no-results" id="no-results">Không tìm thấy kết quả nào. Thử từ khoá khác nhé.</div>
 
 <!-- ══ P1 ══ -->
-<div class="phase" id="p1" style="display: none;">
+<div class="phase" id="p1">
   <div class="ph" onclick="tog(this)">
     <div class="ph-ico">🎓</div>
     <div class="ph-info">
@@ -203,9 +203,9 @@ a.lk:hover{text-decoration:underline}
       <div class="ph-title" spellcheck="false">Vừa pass training – Nhận tài khoản &amp; tham gia kênh</div>
       <div class="ph-sub" spellcheck="false"><br></div>
     </div>
-    <div class="ph-arr">▶</div>
+    <div class="ph-arr open">▶</div>
   </div>
-  <div class="pb">
+  <div class="pb open">
     <div class="pb-inner">
       <div class="steps">
 
@@ -267,7 +267,7 @@ a.lk:hover{text-decoration:underline}
 </div>
 
 <!-- ══ P2 ══ -->
-<div class="phase" id="p2" style="display: none;">
+<div class="phase" id="p2">
   <div class="ph orange" onclick="tog(this)">
     <div class="ph-ico">📋</div>
     <div class="ph-info">
@@ -275,9 +275,9 @@ a.lk:hover{text-decoration:underline}
       <div class="ph-title" spellcheck="false">Nhận lớp mới – Sau khi BVH xếp lớp &amp; gửi mail khai giảng</div>
       <div class="ph-sub" spellcheck="false">Nhận mail từ BVH → thực hiện ngay trước ngày khai giảng</div>
     </div>
-    <div class="ph-arr">▶</div>
+    <div class="ph-arr open">▶</div>
   </div>
-  <div class="pb">
+  <div class="pb open">
     <div class="pb-inner">
       <div class="steps">
 
@@ -317,7 +317,7 @@ a.lk:hover{text-decoration:underline}
 </div>
 
 <!-- ══ P3 ══ -->
-<div class="phase" id="p3" style="display: none;">
+<div class="phase" id="p3">
   <div class="ph teal" onclick="tog(this)">
     <div class="ph-ico">🕐</div>
     <div class="ph-info">
@@ -325,9 +325,9 @@ a.lk:hover{text-decoration:underline}
       <div class="ph-title" spellcheck="false">Ngay trước buổi khai giảng – Checklist kỹ thuật</div>
       <div class="ph-sub" spellcheck="false">Làm trong ngày khai giảng, trước giờ học</div>
     </div>
-    <div class="ph-arr">▶</div>
+    <div class="ph-arr open">▶</div>
   </div>
-  <div class="pb">
+  <div class="pb open">
     <div class="pb-inner">
       <div class="steps">
 
@@ -366,7 +366,7 @@ a.lk:hover{text-decoration:underline}
 </div>
 
 <!-- ══ P4 ══ -->
-<div class="phase" id="p4" style="display: none;">
+<div class="phase" id="p4">
   <div class="ph green" onclick="tog(this)">
     <div class="ph-ico">🎉</div>
     <div class="ph-info">
@@ -374,9 +374,9 @@ a.lk:hover{text-decoration:underline}
       <div class="ph-title" spellcheck="false">Buổi khai giảng – Trong buổi &amp; Sau buổi</div>
       <div class="ph-sub" spellcheck="false">Quản lý thành viên · Nội dung khai giảng · Việc cần làm ngay sau buổi 1</div>
     </div>
-    <div class="ph-arr">▶</div>
+    <div class="ph-arr open">▶</div>
   </div>
-  <div class="pb">
+  <div class="pb open">
     <div class="pb-inner">
       <div class="sh" spellcheck="false">TRONG BUỔI</div>
       <div class="steps">
@@ -449,11 +449,11 @@ a.lk:hover{text-decoration:underline}
           <p style="margin-top:5px" spellcheck="false">Ghi rõ tên các HV cần check lại điểm đầu vào kèm lý do.</p>
           <p spellcheck="false" style="margin-top:6px">Vào <strong spellcheck="false">Danh sách học viên</strong> trong lớp (trên Cổng) sẽ thấy hàng nút thao tác này:</p>
           <div style="border:1px solid #e2e8f0;border-radius:10px;padding:10px 12px;margin:8px 0;background:#fff;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-            <span style="width:34px;height:34px;border-radius:7px;background:#dcfce7;border:1px solid #86efac;display:flex;align-items:center;justify-content:center;font-size:15px" spellcheck="false">🔒</span>
-            <span style="width:34px;height:34px;border-radius:7px;background:#475569;display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px" spellcheck="false">⬆️</span>
-            <span style="position:relative;width:34px;height:34px;border-radius:7px;background:#f1f5f9;border:1px solid #cbd5e1;display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:16px;box-shadow:0 0 0 3px rgba(22,163,74,.35)" spellcheck="false">⊘<span style="position:absolute;top:-9px;right:-9px;background:#16a34a;color:#fff;font-size:10px;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center" spellcheck="false">3</span></span>
-            <span style="width:34px;height:34px;border-radius:7px;background:#f1f5f9;border:1px solid #cbd5e1;display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:16px;font-weight:700" spellcheck="false">!</span>
-            <span style="width:34px;height:34px;border-radius:7px;background:#fef2f2;border:1px solid #fca5a5;display:flex;align-items:center;justify-content:center;font-size:16px" spellcheck="false">⚡</span>
+            <span style="width:34px;height:34px;border-radius:7px;background:#dcfce7;border:1px solid #86efac;display:flex;align-items:center;justify-content:center;font-size:15px">🔒</span>
+            <span style="width:34px;height:34px;border-radius:7px;background:#475569;display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px">⬆️</span>
+            <span style="position:relative;width:34px;height:34px;border-radius:7px;background:#f1f5f9;border:1px solid #cbd5e1;display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:16px;box-shadow:0 0 0 3px rgba(22,163,74,.35)">⊘<span style="position:absolute;top:-9px;right:-9px;background:#16a34a;color:#fff;font-size:10px;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center">3</span></span>
+            <span style="width:34px;height:34px;border-radius:7px;background:#f1f5f9;border:1px solid #cbd5e1;display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:16px;font-weight:700">!</span>
+            <span style="width:34px;height:34px;border-radius:7px;background:#fef2f2;border:1px solid #fca5a5;display:flex;align-items:center;justify-content:center;font-size:16px">⚡</span>
             <span style="font-size:12px;color:#64748b;margin-left:4px" spellcheck="false">Hàng nút Thao tác trên Cổng — <strong spellcheck="false">nút thứ 3</strong> là nút trạng thái cam kết</span>
           </div>
           <div class="al al-b"><span class="al-i">🟢</span><div spellcheck="false"><strong spellcheck="false">Cách nhận biết HV có/không cam kết:</strong> nhìn <strong spellcheck="false">nút thứ 3</strong> trong hàng Thao tác của mỗi HV — <strong style="color:#16a34a" spellcheck="false">nút thứ 3 màu xanh = học CÓ cam kết</strong>, <strong style="color:#94a3b8" spellcheck="false">màu xám = học KHÔNG cam kết</strong>. GV chỉ cần confirm trình độ đầu vào với các HV <strong spellcheck="false">nút xanh (có cam kết)</strong>. HV nút xám (không cam kết) <strong spellcheck="false">không cần đề cập trong mail</strong>, nhưng GV vẫn cần <strong spellcheck="false">support sát sao trong suốt khoá học</strong>.</div></div>
@@ -466,7 +466,7 @@ a.lk:hover{text-decoration:underline}
 </div>
 
 <!-- ══ P5 ══ -->
-<div class="phase" id="p5" style="display: none;">
+<div class="phase" id="p5">
   <div class="ph" onclick="tog(this)">
     <div class="ph-ico">🔁</div>
     <div class="ph-info">
@@ -474,9 +474,9 @@ a.lk:hover{text-decoration:underline}
       <div class="ph-title" spellcheck="false">Mỗi buổi học thường – Checklist lặp lại</div>
       <div class="ph-sub" spellcheck="false">Áp dụng đều đặn sau mỗi buổi trong suốt khoá</div>
     </div>
-    <div class="ph-arr">▶</div>
+    <div class="ph-arr open">▶</div>
   </div>
-  <div class="pb">
+  <div class="pb open">
     <div class="pb-inner">
       <div class="sh" spellcheck="false">ĐẦU MỖI BUỔI</div>
       <div class="steps">
@@ -606,7 +606,7 @@ a.lk:hover{text-decoration:underline}
 </div>
 
 <!-- ══ P6 ══ -->
-<div class="phase" id="p6" style="display: none;">
+<div class="phase" id="p6">
   <div class="ph purple" onclick="tog(this)">
     <div class="ph-ico">📝</div>
     <div class="ph-info">
@@ -614,9 +614,9 @@ a.lk:hover{text-decoration:underline}
       <div class="ph-title" spellcheck="false">Daily Challenge – Quy định chi tiết</div>
       <div class="ph-sub" spellcheck="false">Deadline HV nộp · Deadline GV chấm · Xử lý nộp muộn</div>
     </div>
-    <div class="ph-arr">▶</div>
+    <div class="ph-arr open">▶</div>
   </div>
-  <div class="pb">
+  <div class="pb open">
     <div class="pb-inner">
       <div class="steps">
 
@@ -679,7 +679,7 @@ a.lk:hover{text-decoration:underline}
 </div>
 
 <!-- ══ P7 ══ -->
-<div class="phase" id="p7" style="display: none;">
+<div class="phase" id="p7">
   <div class="ph teal" onclick="tog(this)">
     <div class="ph-ico">🎧</div>
     <div class="ph-info">
@@ -687,9 +687,9 @@ a.lk:hover{text-decoration:underline}
       <div class="ph-title" spellcheck="false">Phụ đạo – Chỉ áp dụng lớp Online 1:7 hoặc 1:8</div>
       <div class="ph-sub" spellcheck="false">Đăng ký qua Cổng (Tra cứu lịch › Lịch phụ đạo) · Hình thức 1:1 · Lương 50k/30 phút</div>
     </div>
-    <div class="ph-arr">▶</div>
+    <div class="ph-arr open">▶</div>
   </div>
-  <div class="pb">
+  <div class="pb open">
     <div class="pb-inner">
       <div class="steps">
 
@@ -753,7 +753,7 @@ a.lk:hover{text-decoration:underline}
 </div>
 
 <!-- ══ P8 ══ -->
-<div class="phase" id="p8" style="display: none;">
+<div class="phase" id="p8">
   <div class="ph orange" onclick="tog(this)">
     <div class="ph-ico">📊</div>
     <div class="ph-info">
@@ -761,9 +761,9 @@ a.lk:hover{text-decoration:underline}
       <div class="ph-title" spellcheck="false">Đánh giá giữa khoá – Sau buổi 10, hoàn thành trước buổi 12</div>
       <div class="ph-sub" spellcheck="false">Hệ thống tự nhắc khi GV điểm danh buổi 10</div>
     </div>
-    <div class="ph-arr">▶</div>
+    <div class="ph-arr open">▶</div>
   </div>
-  <div class="pb">
+  <div class="pb open">
     <div class="pb-inner">
       <div class="steps">
 
@@ -791,9 +791,9 @@ a.lk:hover{text-decoration:underline}
       <div class="ph-title" spellcheck="false">Cuối khoá – Test, nhập điểm, book Speaking, xử lý kết quả</div>
       <div class="ph-sub" spellcheck="false">4 bước tuần tự · Điều kiện pass từng band · Hoàn thành / Test lại / Học lại</div>
     </div>
-    <div class="ph-arr">▶</div>
+    <div class="ph-arr open">▶</div>
   </div>
-  <div class="pb">
+  <div class="pb open">
     <div class="pb-inner">
       <div class="sh" spellcheck="false">BƯỚC 1 – CHUẨN BỊ &amp; TỔ CHỨC TEST</div>
       <div class="steps">
@@ -883,7 +883,7 @@ a.lk:hover{text-decoration:underline}
           <div class="st r" spellcheck="false">HV thái độ không nghiêm túc / thiếu bài / nghỉ nhiều – Quy trình 3 bước bắt buộc</div>
           <ul class="b">
             <li spellcheck="false"><strong spellcheck="false">B1:</strong> GV chủ động nhắc nhở tối thiểu <strong spellcheck="false">4 lần</strong> qua tin nhắn (trong đó ≥1 lần quán triệt quy định cam kết). Lưu ảnh chụp làm minh chứng.</li>
-            <li spellcheck="false"><strong spellcheck="false">B2:</strong> Dùng nút <strong spellcheck="false">⚡ "Gửi email nhắc nhở"</strong> trên Cổng (mục Danh sách học viên), tối thiểu 2 lần (Lần 1: khi HV chuẩn bị mất cam kết, Lần 2: Sau khi HV đã mất cam kết).&nbsp;<div>Hệ thống <strong spellcheck="false">tự động thống kê số lần vi phạm</strong> và số lần đã nhắc; GV chỉ cần chọn <em spellcheck="false">loại email</em> và viết <em spellcheck="false">nội dung nhắc nhở</em> (nên nhấn mạnh đã nhắc trực tiếp HV và cần phụ huynh/CVHT đốc thúc thêm).</div></li>
+            <li spellcheck="false"><strong spellcheck="false">B2:</strong> Dùng nút <strong spellcheck="false">⚡ "Gửi email nhắc nhở"</strong> trên Cổng (mục Danh sách học viên). Hệ thống <strong spellcheck="false">tự động thống kê số lần vi phạm</strong> và số lần đã nhắc; GV chỉ cần chọn <em spellcheck="false">loại email</em> và viết <em spellcheck="false">nội dung nhắc nhở</em> (nên nhấn mạnh đã nhắc trực tiếp HV và cần phụ huynh/CVHT đốc thúc thêm).</li>
             <li spellcheck="false"><strong spellcheck="false">B3:</strong> Gửi email <strong spellcheck="false">đề xuất không tính kết quả HV vào tỉ lệ lên band</strong>.</li>
           </ul>
           <div class="al al-y"><span class="al-i">📧</span><span spellcheck="false">Deadline gửi email đề xuất (B3): <strong spellcheck="false">trước ngày 12 của tháng sau khi lớp kết thúc</strong>. VD: lớp kết thúc 17/9 → muộn nhất 11/10.</span></div>
@@ -922,13 +922,14 @@ a.lk:hover{text-decoration:underline}
           <div class="al al-b"><span class="al-i">💡</span><span spellcheck="false">Khi gửi mail đề xuất không tính tỉ lệ lên band, GV chỉ cần <strong spellcheck="false">cap lại màn hình phần "Hệ thống đã tự động thống kê số lần đã nhắc nhở HV"</strong> kèm nội dung làm minh chứng.</span></div>
 
           <div class="sh" style="margin-top:18px" spellcheck="false">✉️ MẪU NỘI DUNG EMAIL NHẮC NHỞ (THAM KHẢO)</div>
+          <div class="al al-y"><span class="al-i">📌</span><span spellcheck="false">GV cần gửi email nhắc nhở <strong spellcheck="false">tối thiểu 2 lần</strong>: <strong spellcheck="false">Lần 1 — trước khi HV mất cam kết</strong> (dùng mẫu cảnh báo bên dưới); <strong spellcheck="false">Lần 2 — sau khi HV đã mất cam kết</strong>. Lưu lại làm minh chứng.</span></div>
 
-          <div class="al al-y" style="margin-bottom:4px"><span class="al-i">⚠️</span><span spellcheck="false"><strong spellcheck="false">Lần 1: Khi HV chuẩn bị mất cam kết</strong> – cảnh báo, đã nhắc nhiều lần</span></div>
+          <div class="al al-y" style="margin-bottom:4px"><span class="al-i">⚠️</span><span spellcheck="false"><strong spellcheck="false">Khi HV chuẩn bị mất cam kết</strong> – cảnh báo, đã nhắc nhiều lần</span></div>
           <div style="border-left:3px solid #d97706;background:#fffbeb;border-radius:6px;padding:8px 12px;margin:6px 0;font-size:13px" spellcheck="false"><strong spellcheck="false">① Nghỉ gần ngưỡng 10% + thiếu bài:</strong><br>Em {{Tên HV}} hiện đã nghỉ gần chạm mức giới hạn 10% số buổi và còn một số bài tập chưa hoàn thành. Tôi đã nhắc nhở em trực tiếp trên lớp nhiều lần nhưng tình hình chưa cải thiện rõ. Em vẫn còn cơ hội giữ cam kết nếu tham gia đầy đủ các buổi còn lại và nộp bù bài đúng hạn.</div>
           <div style="border-left:3px solid #d97706;background:#fffbeb;border-radius:6px;padding:8px 12px;margin:6px 0;font-size:13px" spellcheck="false"><strong spellcheck="false">② Bài chưa đạt sao gần ngưỡng 20%:</strong><br>Lượng bài chưa đạt sao của em {{Tên HV}} đang tiến sát ngưỡng 20%. Tôi đã trao đổi và nhắc em điều chỉnh cách làm bài, nhưng đến nay em vẫn làm hơi vội/thiếu ý. Đây là giai đoạn quan trọng, rất mong gia đình động viên em đầu tư kỹ hơn để không ảnh hưởng quyền lợi cam kết.</div>
           <div style="border-left:3px solid #d97706;background:#fffbeb;border-radius:6px;padding:8px 12px;margin:6px 0;font-size:13px" spellcheck="false"><strong spellcheck="false">③ Nghỉ + nộp muộn đáng lưu ý:</strong><br>Em {{Tên HV}} đã nghỉ và nộp muộn ở mức đáng lưu ý, chỉ còn một khoảng nhỏ nữa là chạm ngưỡng mất cam kết. Dù tôi đã nhắc em trực tiếp nhiều lần, em vẫn chưa có chuyển biến. Tôi mong gia đình trao đổi với em sớm để cùng điều chỉnh kịp thời, vì em hoàn toàn còn cơ hội giữ cam kết nếu nghiêm túc trở lại từ bây giờ.</div>
 
-          <div class="al al-r" style="margin:10px 0 4px"><span class="al-i">🚫</span><span spellcheck="false"><strong spellcheck="false">Lần 2: Sau khi HV đã mất cam kết</strong> – đã đôn đốc nhưng không cải thiện</span></div>
+          <div class="al al-r" style="margin:10px 0 4px"><span class="al-i">🚫</span><span spellcheck="false"><strong spellcheck="false">Sau khi HV đã mất cam kết</strong> – đã đôn đốc nhưng không cải thiện</span></div>
           <div style="border-left:3px solid #dc2626;background:#fef2f2;border-radius:6px;padding:8px 12px;margin:6px 0;font-size:13px" spellcheck="false">Em {{Tên HV}} đã vượt ngưỡng quy định về bài tập (thiếu bài/nộp muộn) nên không còn đủ điều kiện cam kết đầu ra. Tôi đã nhắc và hỗ trợ em nhiều lần nhưng tình hình chưa được cải thiện. Tôi hiểu em có thể đang gặp khó khăn riêng; mong gia đình cùng trao đổi để tôi và CVHT hỗ trợ em lấy lại nhịp học, và cố gắng đến cùng để đạt được kết quả tốt nhất sau khi kết thúc khoá học.</div>
         </div></div>
 
@@ -952,7 +953,7 @@ a.lk:hover{text-decoration:underline}
 </div>
 
 <!-- ══ P10 ══ -->
-<div class="phase" id="p10" style="display: none;">
+<div class="phase" id="p10">
   <div class="ph green" onclick="tog(this)">
     <div class="ph-ico">🏆</div>
     <div class="ph-info">
@@ -960,9 +961,9 @@ a.lk:hover{text-decoration:underline}
       <div class="ph-title" spellcheck="false">Sau khi lớp kết thúc – Nhận thưởng &amp; Nhận lớp mới</div>
       <div class="ph-sub" spellcheck="false">Lớp kiểu mẫu · Nâng bậc lương · Cập nhật lịch rảnh</div>
     </div>
-    <div class="ph-arr">▶</div>
+    <div class="ph-arr open">▶</div>
   </div>
-  <div class="pb">
+  <div class="pb open">
     <div class="pb-inner">
       <div class="steps">
 
@@ -1006,7 +1007,7 @@ a.lk:hover{text-decoration:underline}
 
 
 <!-- ══ P13 – MỚI ══ -->
-<div class="phase" id="p13" style="display: none;">
+<div class="phase" id="p13">
   <div class="ph orange" onclick="tog(this)">
     <div class="ph-ico">📅</div>
     <div class="ph-info">
@@ -1014,9 +1015,9 @@ a.lk:hover{text-decoration:underline}
       <div class="ph-title" spellcheck="false">Đổi lịch · Tạm dừng · Nghỉ việc – Quy trình &amp; Email mẫu</div>
       <div class="ph-sub" spellcheck="false">Xin nghỉ buổi · Tạm dừng tối đa 4 tháng · Nghỉ việc báo trước 1 tháng</div>
     </div>
-    <div class="ph-arr">▶</div>
+    <div class="ph-arr open">▶</div>
   </div>
-  <div class="pb">
+  <div class="pb open">
     <div class="pb-inner">
       <div class="steps">
 
@@ -1078,7 +1079,7 @@ a.lk:hover{text-decoration:underline}
 </div>
 
 <!-- ══ P11 ══ -->
-<div class="phase" id="p11" style="display: none;">
+<div class="phase" id="p11">
   <div class="ph" onclick="tog(this)">
     <div class="ph-ico">📞</div>
     <div class="ph-info">
@@ -1086,14 +1087,14 @@ a.lk:hover{text-decoration:underline}
       <div class="ph-title" spellcheck="false">Đầu mối liên hệ – Gặp vấn đề gì, hỏi ai?</div>
       <div class="ph-sub" spellcheck="false">Tra cứu nhanh khi cần hỗ trợ</div>
     </div>
-    <div class="ph-arr">▶</div>
+    <div class="ph-arr open">▶</div>
   </div>
-  <div class="pb">
+  <div class="pb open">
     <div class="pb-inner">
       <div class="cgrid">
         <div class="ccard"><div class="crole" spellcheck="false">Headteacher – Chuyên môn</div><div class="cname" spellcheck="false">Ms. Hoa</div><div class="cphone" spellcheck="false">0988 253 313</div><div class="cname" style="margin-top:5px" spellcheck="false">Ms. Phương</div><div class="cphone" spellcheck="false">0347 033 123</div><div class="cname" style="margin-top:5px" spellcheck="false">Ms. Hải</div><div class="cphone" spellcheck="false">0346 509 168</div><div class="cnote" spellcheck="false">Tài liệu, quy trình, chuyên môn, lần đầu dạy band mới</div></div>
         <div class="ccard"><div class="crole" spellcheck="false">Ban Vận Hành</div><div class="cname" spellcheck="false">Ms. Hương</div><div class="cphone" spellcheck="false">0911006362</div><div class="cnote" spellcheck="false">Sắp lớp, khai giảng, tính lương, tài khoản Zoom</div><div class="cname" style="margin-top:6px" spellcheck="false">Ms. Thanh Huệ</div><div class="cphone" spellcheck="false">0389897838</div><div class="cnote" spellcheck="false">• Tiếp nhận &amp; xử lý feedback HV, hỗ trợ HV các vấn đề phát sinh<br>• Đăng ký thi cho HV + GV<br>• Tiếp nhận đề xuất xin nghỉ/đổi lịch/chuyển hình thức học của GV</div><div class="cname" style="margin-top:6px" spellcheck="false">Ms. Đinh Quỳnh</div><div class="cphone" spellcheck="false">0867218166</div><div class="cnote" spellcheck="false">Tiếp nhận các vấn đề về cơ sở vật chất lớp Offline</div></div>
-        <div class="ccard"><div class="crole" spellcheck="false">Ban Công nghệ – Cổng</div><div class="cname" spellcheck="false">Lỗi không khẩn cấp =&gt; <span style="font-weight: normal;" spellcheck="false">nhắn nhóm "Báo lỗi" kèm mô tả/ hình ảnh lỗi</span></div><div class="cname" style="margin-top:5px" spellcheck="false">Bùi Xuân Thắng (khẩn)</div><div class="cphone" spellcheck="false">0967594691</div></div>
+        <div class="ccard"><div class="crole" spellcheck="false">Ban Công nghệ – Cổng</div><div class="cname" spellcheck="false">Lỗi không khẩn cấp =&gt; <span style="font-weight: normal;">nhắn nhóm "Báo lỗi" kèm mô tả/ hình ảnh lỗi</span></div><div class="cname" style="margin-top:5px" spellcheck="false">Bùi Xuân Thắng (khẩn)</div><div class="cphone" spellcheck="false">0967594691</div></div>
         <div class="ccard"><div class="crole" spellcheck="false">Hoa hồng giới thiệu HV</div><div class="cname" spellcheck="false">Ms. Trang</div><div class="cphone" spellcheck="false">0346 686 728</div><div class="cnote" spellcheck="false">Nhắn trước khi HV đăng ký</div></div>
       </div>
       <div class="al al-y" style="margin-top:12px"><span class="al-i">⚠️</span><span spellcheck="false">HV hỏi về bảo lưu, đổi lịch, xin học band khác → báo HV liên hệ <strong spellcheck="false">Cố vấn học tập</strong>. GV không tự quyết định.</span></div>
@@ -1102,7 +1103,7 @@ a.lk:hover{text-decoration:underline}
 </div>
 
 <!-- ══ P12 ══ -->
-<div class="phase" id="p12" style="display: none;">
+<div class="phase" id="p12">
   <div class="ph red" onclick="tog(this)">
     <div class="ph-ico">⚖️</div>
     <div class="ph-info">
@@ -1110,9 +1111,9 @@ a.lk:hover{text-decoration:underline}
       <div class="ph-title" spellcheck="false">Tổng hợp Quy định &amp; Kỷ luật</div>
       <div class="ph-sub" spellcheck="false">Tra cứu nhanh tất cả các mức phạt</div>
     </div>
-    <div class="ph-arr">▶</div>
+    <div class="ph-arr open">▶</div>
   </div>
-  <div class="pb">
+  <div class="pb open">
     <div class="pb-inner">
       <table class="t r pen">
         <thead><tr><th spellcheck="false">Vi phạm</th><th spellcheck="false">Lần 1</th><th spellcheck="false">Lần 2</th><th spellcheck="false">Lần 3+</th></tr></thead>
@@ -1574,17 +1575,17 @@ function tog(hdr){
 
 <!-- EDIT TOOLBAR -->
 <div id="etb">
-  <div id="etb-hint" spellcheck="false" style="display: none;">✏️ Đang ở chế độ chỉnh sửa — bấm vào nội dung để sửa</div>
+  <div id="etb-hint" spellcheck="false">✏️ Đang ở chế độ chỉnh sửa — bấm vào nội dung để sửa</div>
   <div class="etb-row">
-    <button id="btn-save" class="etb-btn" onclick="saveFile()" style="display: none;">⬇️ Tải về máy</button>
-    <button id="btn-push" class="etb-btn" onclick="pushToGithub()" style="display: none; background: rgb(37, 99, 235); color: rgb(255, 255, 255);" disabled="">⏳ Đang lưu...</button>
-    <button id="btn-edit" class="etb-btn" onclick="askPassword()">🔒 Tắt chỉnh sửa</button>
+    <button id="btn-save" class="etb-btn" onclick="saveFile()" style="display:none">⬇️ Tải về máy</button>
+    <button id="btn-push" class="etb-btn" onclick="pushToGithub()" style="display:none;background:#2563eb;color:#fff">💾 Lưu lên web</button>
+    <button id="btn-edit" class="etb-btn" onclick="askPassword()">✏️ Bật chỉnh sửa</button>
     <button id="btn-settings" class="etb-btn" onclick="openSettings()" style="background:#475569;color:#fff">⚙️ Cài đặt</button>
   </div>
 </div>
 
 <!-- TOAST NOTIFICATION -->
-<div id="push-toast" style="position: fixed; bottom: 80px; right: 20px; background: rgb(215, 32, 39); color: rgb(255, 255, 255); padding: 11px 20px; border-radius: 22px; font-size: 13px; font-weight: 700; z-index: 99999; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 14px; display: flex; align-items: center; gap: 8px;">⏳ Đang cập nhật lên web...</div>
+<div id="push-toast" style="display:none"></div>
 
 <!-- PASSWORD MODAL -->
 <div id="pw-overlay" style="display: none; position: fixed; inset: 0px; background: rgba(0, 0, 0, 0.45); z-index: 99999; align-items: center; justify-content: center;">
