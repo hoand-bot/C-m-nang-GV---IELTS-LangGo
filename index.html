@@ -86,6 +86,15 @@ mark{background:#fef08a;border-radius:3px;padding:0 2px;color:var(--text)}
 /* DEADLINE */
 .dl{background:#fff7ed;border:2px solid var(--amber);border-radius:8px;padding:7px 12px;margin:7px 0;font-size:13px;color:#78350f;display:flex;align-items:center;gap:7px}
 
+/* DISCLOSURE – Cam kết học tập (ấn để mở) */
+details.ckmt{border:1.5px solid #f5c6c8;border-radius:10px;background:var(--blue-l);margin:9px 0;overflow:hidden}
+details.ckmt>summary{cursor:pointer;list-style:none;padding:10px 13px;font-weight:700;color:#D72027;font-size:13.5px;display:flex;align-items:center;gap:8px;user-select:none}
+details.ckmt>summary::-webkit-details-marker{display:none}
+details.ckmt>summary::before{content:"▶";font-size:10px;transition:transform .2s;color:#D72027;flex-shrink:0}
+details.ckmt[open]>summary::before{transform:rotate(90deg)}
+details.ckmt>summary:hover{background:#fbe3e4}
+.ckmt-body{padding:6px 14px 14px;background:#fff;border-top:1px solid #f5c6c8}
+
 /* TABLE */
 table.t{width:100%;border-collapse:collapse;font-size:13.5px;margin:8px 0;overflow:hidden;border-radius:8px}
 table.t th{background:#D72027;color:#fff;padding:8px 12px;text-align:left;font-weight:600}
@@ -189,6 +198,7 @@ a.lk:hover{text-decoration:underline}
 <div class="toc">
   <div class="toc-lbl">📋 Nhảy đến giai đoạn</div>
   <div class="toc-pills">
+    <a href="#p0">✅ Checklist đầu việc</a>
     <a href="#p1">1 · Pass training</a>
     <a href="#p2">2 · Nhận lớp mới</a>
     <a href="#p3">3 · Trước khai giảng</a>
@@ -198,6 +208,7 @@ a.lk:hover{text-decoration:underline}
     <a href="#p7">7 · Phụ đạo &amp; Bổ trợ</a>
     <a href="#p8">8 · Giữa khoá</a>
     <a href="#p9">9 · Cuối khoá &amp; test</a>
+    <a href="#pout">🎯 Đầu ra các khoá</a>
     <a href="#p10">10 · Sau khi lớp xong</a>
     
     <a href="#p11">11 · Liên hệ</a>
@@ -208,6 +219,57 @@ a.lk:hover{text-decoration:underline}
 
 <div class="content">
 <div class="no-results" id="no-results">Không tìm thấy kết quả nào. Thử từ khoá khác nhé.</div>
+
+<!-- ══ P0 – CHECKLIST ĐẦU VIỆC GV ══ -->
+<div class="phase" id="p0">
+  <div class="ph" onclick="tog(this)">
+    <div class="ph-ico">✅</div>
+    <div class="ph-info">
+      <div class="ph-tag" spellcheck="false">Tổng hợp nhanh</div>
+      <div class="ph-title" spellcheck="false">Checklist đầu việc Giảng viên – Trước · Trong · Sau</div>
+      <div class="ph-sub" spellcheck="false">Bản rút gọn toàn bộ đầu việc GV cần làm theo dòng thời gian một lớp học</div>
+    </div>
+    <div class="ph-arr open">▶</div>
+  </div>
+  <div class="pb open">
+    <div class="pb-inner">
+      <div class="al al-b"><span class="al-i">🧭</span><span spellcheck="false">Dùng checklist này để tự soát đầu việc theo thứ tự thời gian. Chi tiết từng bước xem ở các mục bên dưới.</span></div>
+      <div class="sh" spellcheck="false">🅰️ TRƯỚC (BEFORE)</div>
+      <div style="font-size:12px;font-weight:700;color:var(--blue);background:var(--blue-l);border-radius:6px;padding:5px 11px;margin:14px 0 2px" spellcheck="false">Lần đầu tiên dạy một band mới</div>
+      <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex-shrink:0;width:17px;height:17px;border:2px solid #cbd5e1;border-radius:4px;margin-top:2px;display:inline-block"></span><div style="flex:1;font-size:13.5px" spellcheck="false">Liên hệ Headteacher để lấy lộ trình + sắp xếp gọi 1-1 trước khai giảng (ít nhất <strong spellcheck="false">3 ngày</strong> trước ngày khai giảng dự kiến)</div></div>
+      <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex-shrink:0;width:17px;height:17px;border:2px solid #cbd5e1;border-radius:4px;margin-top:2px;display:inline-block"></span><div style="flex:1;font-size:13.5px" spellcheck="false">Quay video giới thiệu bản thân → gửi Headteacher check trước (unedited ver.)</div></div>
+      <div style="font-size:12px;font-weight:700;color:var(--blue);background:var(--blue-l);border-radius:6px;padding:5px 11px;margin:14px 0 2px" spellcheck="false">Trước buổi khai giảng</div>
+      <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex-shrink:0;width:17px;height:17px;border:2px solid #cbd5e1;border-radius:4px;margin-top:2px;display:inline-block"></span><div style="flex:1;font-size:13.5px" spellcheck="false">Check mail BVH</div></div>
+      <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex-shrink:0;width:17px;height:17px;border:2px solid #cbd5e1;border-radius:4px;margin-top:2px;display:inline-block"></span><div style="flex:1;font-size:13.5px" spellcheck="false">Đăng nhập thử Zoom (tránh khung giờ 17h – 23h). Thay background LangGo. Đăng nhập cổng đào tạo để nắm thông tin lớp.</div></div>
+      <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex-shrink:0;width:17px;height:17px;border:2px solid #cbd5e1;border-radius:4px;margin-top:2px;display:inline-block"></span><div style="flex:1;font-size:13.5px" spellcheck="false">Join group Zalo của lớp theo link BVH báo trong mail. Chủ động liên hệ với HV chưa join nhóm, đảm bảo <strong spellcheck="false">100% HV</strong> đều ở trong group trước buổi khai giảng.</div></div>
+      <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex-shrink:0;width:17px;height:17px;border:2px solid #cbd5e1;border-radius:4px;margin-top:2px;display:inline-block"></span><div style="flex:1;font-size:13.5px" spellcheck="false">GV gửi các thông tin quan trọng trước buổi khai giảng: Tin nhắn chào mừng + video giới thiệu bản thân (khuyến khích HV gửi video giới thiệu thông tin cơ bản); Link Zoom buổi học; Nhắc HV đọc thư Winning habits, chủ động join lớp sớm 5–10 phút để ổn định. <span style="color:#b45309;font-weight:700">⏰ Deadline: tối thiểu 6 tiếng trước buổi học</span></div></div>
+      <div class="sh" spellcheck="false">🅱️ TRONG (DURING)</div>
+      <div style="font-size:12px;font-weight:700;color:var(--blue);background:var(--blue-l);border-radius:6px;padding:5px 11px;margin:14px 0 2px" spellcheck="false">Trong buổi khai giảng</div>
+      <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex-shrink:0;width:17px;height:17px;border:2px solid #cbd5e1;border-radius:4px;margin-top:2px;display:inline-block"></span><div style="flex:1;font-size:13.5px" spellcheck="false">Điểm danh đầu giờ, check kĩ và đảm bảo chỉ có HV của lớp tham gia vào Zoom</div></div>
+      <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex-shrink:0;width:17px;height:17px;border:2px solid #cbd5e1;border-radius:4px;margin-top:2px;display:inline-block"></span><div style="flex:1;font-size:13.5px" spellcheck="false">Giới thiệu Objectives của buổi khai giảng: Teacher’s &amp; Student’s introduction; Mục tiêu khóa học: Winning habits + IELTS (Mindset về Daily Challenge); Syllabus; Classroom rules (Thống nhất với lớp deadline DC)</div></div>
+      <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex-shrink:0;width:17px;height:17px;border:2px solid #cbd5e1;border-radius:4px;margin-top:2px;display:inline-block"></span><div style="flex:1;font-size:13.5px" spellcheck="false">GV dạy Lesson 1 theo đúng quy trình</div></div>
+      <div style="font-size:12px;font-weight:700;color:var(--blue);background:var(--blue-l);border-radius:6px;padding:5px 11px;margin:14px 0 2px" spellcheck="false">Sau buổi học</div>
+      <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex-shrink:0;width:17px;height:17px;border:2px solid #cbd5e1;border-radius:4px;margin-top:2px;display:inline-block"></span><div style="flex:1;font-size:13.5px" spellcheck="false">(Sau buổi khai giảng) Gửi Quy định lớp học + slide “Cam kết học tập” ở Lesson 1 → ghim đầu nhóm Zalo lớp, yêu cầu <strong spellcheck="false">100% HV</strong> đọc và confirm nắm thông tin</div></div>
+      <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex-shrink:0;width:17px;height:17px;border:2px solid #cbd5e1;border-radius:4px;margin-top:2px;display:inline-block"></span><div style="flex:1;font-size:13.5px" spellcheck="false">Điểm danh, up slides, recording và DC lên cổng đào tạo và thông báo để HV lên cổng làm bài mỗi ngày. <span style="color:#b45309;font-weight:700">⏰ Deadline: 23h59 cùng ngày</span></div></div>
+      <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex-shrink:0;width:17px;height:17px;border:2px solid #cbd5e1;border-radius:4px;margin-top:2px;display:inline-block"></span><div style="flex:1;font-size:13.5px" spellcheck="false">Sign out tài khoản Zoom ngay sau khi lớp kết thúc</div></div>
+      <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex-shrink:0;width:17px;height:17px;border:2px solid #cbd5e1;border-radius:4px;margin-top:2px;display:inline-block"></span><div style="flex:1;font-size:13.5px" spellcheck="false">(Sau buổi khai giảng) Gửi Headteacher report khai giảng (link docs, mở quyền chỉnh sửa) sau lesson 1 và sau lesson 2 để nhận feedback trước buổi học tiếp theo. <span style="color:#b45309;font-weight:700">⏰ Deadline: 12 tiếng tính từ lúc lớp học kết thúc</span></div></div>
+      <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex-shrink:0;width:17px;height:17px;border:2px solid #cbd5e1;border-radius:4px;margin-top:2px;display:inline-block"></span><div style="flex:1;font-size:13.5px" spellcheck="false">Confirm trình độ đầu vào HV: ghi rõ họ và tên các HV cần check lại đầu vào + lý do, gửi tới mail <strong spellcheck="false">headteacher@langgo.edu.vn</strong>, CC: <strong spellcheck="false">hoand@langgo.edu.vn</strong>, <strong spellcheck="false">banvanhanh@langgo.edu.vn</strong>. <span style="color:#b45309;font-weight:700">⏰ Deadline: sau 2 buổi học đầu tiên</span></div></div>
+      <div style="font-size:12px;font-weight:700;color:var(--blue);background:var(--blue-l);border-radius:6px;padding:5px 11px;margin:14px 0 2px" spellcheck="false">Trong khóa</div>
+      <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex-shrink:0;width:17px;height:17px;border:2px solid #cbd5e1;border-radius:4px;margin-top:2px;display:inline-block"></span><div style="flex:1;font-size:13.5px" spellcheck="false">Chấm chữa Daily Challenges sau mỗi buổi học theo đúng deadline, đảm bảo chất lượng</div></div>
+      <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex-shrink:0;width:17px;height:17px;border:2px solid #cbd5e1;border-radius:4px;margin-top:2px;display:inline-block"></span><div style="flex:1;font-size:13.5px" spellcheck="false">Gửi recap kiến thức sau mỗi buổi học, gửi thêm tài liệu mở rộng trong khóa học</div></div>
+      <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex-shrink:0;width:17px;height:17px;border:2px solid #cbd5e1;border-radius:4px;margin-top:2px;display:inline-block"></span><div style="flex:1;font-size:13.5px" spellcheck="false">Phụ đạo: GV sắp xếp phụ đạo HV trong khóa, ưu tiên phụ đạo 1-1 và thường xuyên sau khoảng 4–5 buổi học chính, đảm bảo đủ số buổi phụ đạo trên cổng phần “Điểm danh phụ đạo” (muộn nhất trong vòng 30 ngày kể từ buổi cuối cùng của lớp)</div></div>
+      <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex-shrink:0;width:17px;height:17px;border:2px solid #cbd5e1;border-radius:4px;margin-top:2px;display:inline-block"></span><div style="flex:1;font-size:13.5px" spellcheck="false">GV sát sao động viên, nhắc nhở, đôn đốc các trường hợp HV có vấn đề về thái độ học tập (attendance, nộp muộn và thiếu DC, DC không được tích sao…) ngay từ những lần vi phạm đầu tiên; các trường hợp HV đảm bảo cam kết nhưng không tham gia test (Check “Cẩm nang GV” mục IX. BVH – CÁC QUY ĐỊNH TÍNH VÀO ĐIỂM NỘI QUY VÀ TỶ LỆ LÊN BAND)</div></div>
+      <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex-shrink:0;width:17px;height:17px;border:2px solid #cbd5e1;border-radius:4px;margin-top:2px;display:inline-block"></span><div style="flex:1;font-size:13.5px" spellcheck="false">Đánh giá giữa khóa: GV hoàn thành đánh giá HV giữa khóa trên cổng đào tạo, mục “Midterm assessment”. <span style="color:#b45309;font-weight:700">⏰ Deadline: sau buổi 10 và trước buổi 12 của lớp</span></div></div>
+      <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex-shrink:0;width:17px;height:17px;border:2px solid #cbd5e1;border-radius:4px;margin-top:2px;display:inline-block"></span><div style="flex:1;font-size:13.5px" spellcheck="false">Báo cáo lớp học: GV nộp báo cáo theo đợt trong nhóm “Thông báo”, theo đúng deadline được yêu cầu cho mỗi team</div></div>
+      <div class="sh" spellcheck="false">🅾️ SAU (AFTER)</div>
+      <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex-shrink:0;width:17px;height:17px;border:2px solid #cbd5e1;border-radius:4px;margin-top:2px;display:inline-block"></span><div style="flex:1;font-size:13.5px" spellcheck="false"><strong spellcheck="false">Đánh giá cuối khóa:</strong><ul class="b" style="margin-top:6px"><li spellcheck="false">Gửi file Yêu cầu khi test cuối khóa cho HV tối thiểu 2 ngày trước khi thi, 100% HV confirm đã nắm được yêu cầu</li><li spellcheck="false">Tiến hành cho lớp final test (trừ kỹ năng Speaking)</li><li spellcheck="false">Chấm, nhập điểm và nhận xét của GV cuối khóa lên cổng (deadline: 5 ngày kể từ ngày test)</li><li spellcheck="false">Đối với các HV cần test lại, GV tiến hành cho HV test lại theo hướng dẫn trong Cẩm nang GV. Đối với các HV đã pass các kỹ năng, GV hướng dẫn HV đăng ký test Speaking theo link, lưu ý các mốc thời gian quan trọng.</li><li spellcheck="false">GV đảm bảo 100% HV trong lớp đã có kết quả trên cổng trước ngày 12 của tháng liền kề – BVH chốt tỉ lệ lên band</li></ul></div></div>
+      <div class="sh" spellcheck="false">➕ KHÁC (OTHERS)</div>
+      <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex-shrink:0;width:17px;height:17px;border:2px solid #cbd5e1;border-radius:4px;margin-top:2px;display:inline-block"></span><div style="flex:1;font-size:13.5px" spellcheck="false">GV update lịch bận rảnh trên cổng đào tạo (từ ngày 21 đến hết ngày cuối hàng tháng)</div></div>
+      <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex-shrink:0;width:17px;height:17px;border:2px solid #cbd5e1;border-radius:4px;margin-top:2px;display:inline-block"></span><div style="flex:1;font-size:13.5px" spellcheck="false"><strong spellcheck="false">Lớp offline:</strong><ul class="b" style="margin-top:6px"><li spellcheck="false"><strong spellcheck="false">Trước buổi học:</strong> GV đến sớm, chấm công trước buổi học, đảm bảo về thiết bị (máy chiếu, loa, bảng, bút dạ) và chỗ ngồi</li><li spellcheck="false"><strong spellcheck="false">Sau buổi học:</strong> Lau bảng, cuộn lại dây máy chiếu gọn gàng; Nhắc nhở HV gập, cất ghế theo đúng quy định; Tắt điện, quạt và điều hoà; Đảm bảo vệ sinh lớp học; Chấm công sau buổi học và ra về</li></ul></div></div>
+      <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex-shrink:0;width:17px;height:17px;border:2px solid #cbd5e1;border-radius:4px;margin-top:2px;display:inline-block"></span><div style="flex:1;font-size:13.5px" spellcheck="false">Các quy trình khác (Check “Cẩm nang GV” mục XII. CÁC QUY TRÌNH KHÁC): Quy trình thông báo và công nhận lớp kiểu mẫu; Quy trình đề xuất và xét nâng bậc lương sớm</div></div>
+    </div>
+  </div>
+</div>
 
 <!-- ══ P1 ══ -->
 <div class="phase" id="p1">
@@ -420,6 +482,29 @@ a.lk:hover{text-decoration:underline}
             <li spellcheck="false">Phổ biến Rules &amp; Cam kết học tập → đảm bảo <strong spellcheck="false">100% HV confirm</strong> → GV ghim Rules trong nhóm Zalo.</li>
             <li spellcheck="false">Nhấn mạnh: cần dành ít nhất <strong spellcheck="false">2 tiếng/ngày</strong> làm DC. Chỉ HV đủ cam kết mới được đăng ký test lại Speaking.</li>
           </ul>
+          <details class="ckmt" id="cam-ket"><summary spellcheck="false">📋 Cam kết học tập của HV — ấn để xem đầy đủ nội dung</summary><div class="ckmt-body">
+            <div class="al al-b"><span class="al-i">📌</span><span spellcheck="false">Nội dung "Cam kết học tập" (Cam kết số giờ học) GV gửi &amp; ghim đầu nhóm Zalo lớp sau buổi khai giảng, yêu cầu <strong spellcheck="false">100% HV đọc và confirm</strong> đã nắm thông tin.</span></div>
+            <p style="margin:6px 0 2px" spellcheck="false">Học viên phải thực hiện cam kết đảm bảo thời gian học của khóa học như sau:</p>
+            <div class="steps" style="margin-top:10px">
+              <div class="step"><div class="sn g">⏱️</div><div class="sb">
+                <div class="st g" spellcheck="false">Thời gian học trên lớp</div>
+                <p spellcheck="false">Học viên phải đảm bảo tham gia đầy đủ ít nhất <strong spellcheck="false">90% buổi học/khóa</strong>. Đối với lớp học 1-1, học viên không được đổi hoặc dời lịch học quá <strong spellcheck="false">20% buổi học/khóa</strong>, khi đổi/dời lịch cần báo cho Giảng viên <strong spellcheck="false">trước 12h</strong>. Nếu báo trong khoảng thời gian bằng hoặc ít hơn 12h, GV được quyền tính buổi học đó Học viên nghỉ.</p>
+              </div></div>
+              <div class="step"><div class="sn g">🏠</div><div class="sb">
+                <div class="st g" spellcheck="false">Thời gian học ở nhà</div>
+                <p spellcheck="false">Học viên phải hoàn thành đầy đủ và đúng thời gian quy định ít nhất <strong spellcheck="false">90% lượng bài tập về nhà/khoá học</strong>.</p>
+              </div></div>
+            </div>
+            <div class="sh" spellcheck="false" style="margin-top:16px">*CHÚ Ý</div>
+            <ul class="b">
+              <li spellcheck="false">Học viên phải thực hiện theo đúng số giờ học trên lớp và ở nhà như trên để đạt kết quả đầu ra cuối khóa học (Thời lượng học trên lớp, Trung tâm sẽ dựa vào kết quả điểm danh của Giảng viên mỗi buổi học. Thời lượng làm bài tập về nhà, Trung tâm sẽ căn cứ vào kết quả ghi nhận trên hệ thống).</li>
+              <li spellcheck="false">Học viên phải hoàn thành bài tập về nhà đúng và đủ, <strong spellcheck="false">có không quá 20% lượng bài tập bị đánh giá kém chất lượng (không được đánh giá sao)</strong>. Nếu học viên làm bài tập không đủ theo yêu cầu, hoặc muộn deadline mà chưa được sự đồng ý của giáo viên, hoặc sao chép tài liệu, bài tập bên ngoài &gt; 30%, hoặc nộp lại bài tập cũ (với học viên học lại), bài tập đó sẽ tính là không làm.</li>
+              <li spellcheck="false">Học viên phải bật microphone và camera, chọn nơi yên tĩnh và không làm việc riêng trong quá trình tham gia lớp học. Nếu học viên không tuân thủ các điều trên trong buổi học dù giáo viên đã nhắc nhở, buổi đó sẽ tính là <strong spellcheck="false">1 buổi vắng</strong>.</li>
+              <li spellcheck="false">Học viên vào muộn 30 phút hoặc ra khỏi lớp sớm 30 phút thì phải gửi lại báo cáo về kiến thức buổi đó cho giáo viên. Nếu không, buổi đó sẽ tính là <strong spellcheck="false">1 buổi vắng</strong>.</li>
+              <li spellcheck="false">Nếu có lý do bất khả kháng, học viên cần báo lại trước hoặc sau <strong spellcheck="false">không quá 24h</strong> so với thời điểm vi phạm nguyên tắc học tập.</li>
+              <li spellcheck="false">Học viên chỉ được học lên cấp độ tiếp theo nếu đạt kết quả đầu ra. Nếu không đạt kết quả đầu ra thì học viên phải học lại theo quy định học lại mục 3.1.4.</li>
+            </ul>
+          </div></details>
         </div></div>
 
         <div class="step"><div class="sn g">4</div><div class="sb">
@@ -464,11 +549,11 @@ a.lk:hover{text-decoration:underline}
           <p style="margin-top:5px" spellcheck="false">Ghi rõ tên các HV cần check lại điểm đầu vào kèm lý do.</p>
           <p spellcheck="false" style="margin-top:6px">Vào <strong spellcheck="false">Danh sách học viên</strong> trong lớp (trên Cổng) sẽ thấy hàng nút thao tác này:</p>
           <div style="border:1px solid #e2e8f0;border-radius:10px;padding:10px 12px;margin:8px 0;background:#fff;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-            <span style="width:34px;height:34px;border-radius:7px;background:#dcfce7;border:1px solid #86efac;display:flex;align-items:center;justify-content:center;font-size:15px">🔒</span>
-            <span style="width:34px;height:34px;border-radius:7px;background:#475569;display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px">⬆️</span>
-            <span style="position:relative;width:34px;height:34px;border-radius:7px;background:#f1f5f9;border:1px solid #cbd5e1;display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:16px;box-shadow:0 0 0 3px rgba(22,163,74,.35)">⊘<span style="position:absolute;top:-9px;right:-9px;background:#16a34a;color:#fff;font-size:10px;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center">3</span></span>
-            <span style="width:34px;height:34px;border-radius:7px;background:#f1f5f9;border:1px solid #cbd5e1;display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:16px;font-weight:700">!</span>
-            <span style="width:34px;height:34px;border-radius:7px;background:#fef2f2;border:1px solid #fca5a5;display:flex;align-items:center;justify-content:center;font-size:16px">⚡</span>
+            <span style="width:34px;height:34px;border-radius:7px;background:#dcfce7;border:1px solid #86efac;display:flex;align-items:center;justify-content:center;font-size:15px" spellcheck="false">🔒</span>
+            <span style="width:34px;height:34px;border-radius:7px;background:#475569;display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px" spellcheck="false">⬆️</span>
+            <span style="position:relative;width:34px;height:34px;border-radius:7px;background:#f1f5f9;border:1px solid #cbd5e1;display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:16px;box-shadow:0 0 0 3px rgba(22,163,74,.35)" spellcheck="false">⊘<span style="position:absolute;top:-9px;right:-9px;background:#16a34a;color:#fff;font-size:10px;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center" spellcheck="false">3</span></span>
+            <span style="width:34px;height:34px;border-radius:7px;background:#f1f5f9;border:1px solid #cbd5e1;display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:16px;font-weight:700" spellcheck="false">!</span>
+            <span style="width:34px;height:34px;border-radius:7px;background:#fef2f2;border:1px solid #fca5a5;display:flex;align-items:center;justify-content:center;font-size:16px" spellcheck="false">⚡</span>
             <span style="font-size:12px;color:#64748b;margin-left:4px" spellcheck="false">Hàng nút Thao tác trên Cổng — <strong spellcheck="false">nút thứ 3</strong> là nút trạng thái cam kết</span>
           </div>
           <div class="al al-b"><span class="al-i">🟢</span><div spellcheck="false"><strong spellcheck="false">Cách nhận biết HV có/không cam kết:</strong> nhìn <strong spellcheck="false">nút thứ 3</strong> trong hàng Thao tác của mỗi HV — <strong style="color:#16a34a" spellcheck="false">nút thứ 3 màu xanh = học CÓ cam kết</strong>, <strong style="color:#94a3b8" spellcheck="false">màu xám = học KHÔNG cam kết</strong>. GV chỉ cần confirm trình độ đầu vào với các HV <strong spellcheck="false">nút xanh (có cam kết)</strong>. HV nút xám (không cam kết) <strong spellcheck="false">không cần đề cập trong mail</strong>, nhưng GV vẫn cần <strong spellcheck="false">support sát sao trong suốt khoá học</strong>.</div></div>
@@ -715,8 +800,8 @@ a.lk:hover{text-decoration:underline}
       <!-- ── PANE A : TRƯỚC 01/09/2026 ── -->
       <div class="tabpane" id="t7a">
         <div class="pane-hd hd-old">
-          <span class="pane-ic">🕘</span>
-          <div>
+          <span class="pane-ic" spellcheck="false">🕘</span>
+          <div spellcheck="false">
             <strong spellcheck="false">Quy trình cũ</strong> — áp dụng cho các <strong spellcheck="false">lớp khai giảng TRƯỚC 01/09/2026</strong>.<br>
             <span spellcheck="false">Chỉ áp dụng với <strong spellcheck="false">lớp online</strong> (không tính lớp 1-1 và lớp nhóm nhỏ) · Hình thức 1:1 · Lương 50.000đ/30 phút.</span>
           </div>
@@ -781,8 +866,8 @@ a.lk:hover{text-decoration:underline}
       <!-- ── PANE B : TỪ 01/09/2026 ── -->
       <div class="tabpane on" id="t7b">
         <div class="pane-hd hd-new">
-          <span class="pane-ic">🆕</span>
-          <div>
+          <span class="pane-ic" spellcheck="false">🆕</span>
+          <div spellcheck="false">
             <strong spellcheck="false">Quy trình Phụ đạo &amp; Bổ trợ cho học viên chưa đạt</strong> — ban hành nội bộ tháng 8/2026.<br>
             <span spellcheck="false">Áp dụng cho <strong spellcheck="false">lớp ONLINE khai giảng từ 01/09/2026</strong> và <strong spellcheck="false">lớp OFFLINE từ sau kỳ nghỉ lễ</strong>.</span>
           </div>
@@ -1115,6 +1200,25 @@ a.lk:hover{text-decoration:underline}
   </div>
 </div>
 
+<!-- ══ POUT – THÔNG TIN ĐẦU RA CÁC KHOÁ HỌC ══ -->
+<div class="phase" id="pout">
+  <div class="ph purple" onclick="tog(this)">
+    <div class="ph-ico">🎯</div>
+    <div class="ph-info">
+      <div class="ph-tag" spellcheck="false">Tham chiếu</div>
+      <div class="ph-title" spellcheck="false">Thông tin đầu ra các khoá học</div>
+      <div class="ph-sub" spellcheck="false">Band · Format final test Speaking · Kết quả đầu ra Speaking &amp; Writing theo từng khoá</div>
+    </div>
+    <div class="ph-arr open">▶</div>
+  </div>
+  <div class="pb open">
+    <div class="pb-inner">
+      <div class="al al-b"><span class="al-i">📄</span><span spellcheck="false">Mẫu các bài Final test Writing đạt yêu cầu: <a class="lk" target="_blank" href="https://docs.google.com/document/d/1ynPhZbpFjqDKhMi1iGS-tk2ryH1862lMdbi63la53r8/edit?usp=sharing">[UPDATED] Mẫu các bài Final test Writing đạt yêu cầu</a></span></div>
+      <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0"><table class="t" style="min-width:1000px;font-size:13px"><colgroup><col style="width:72px"><col style="width:120px"><col style="width:24%"><col style="width:30%"><col style="width:30%"></colgroup><thead><tr><th rowspan="2" spellcheck="false">Band</th><th rowspan="2" spellcheck="false">Khóa</th><th rowspan="2" spellcheck="false">Format final test Speaking (10–15 phút)</th><th colspan="2" style="text-align:center" spellcheck="false">Kết quả đầu ra</th></tr><tr><th spellcheck="false">Speaking</th><th spellcheck="false">Writing</th></tr></thead><tbody><tr><td style="font-weight:800;color:var(--blue);white-space:nowrap" spellcheck="false">0–2</td><td style="font-weight:700" spellcheck="false">BEGINNER</td><td spellcheck="false">Hỏi &amp; phản xạ các topic, các câu hỏi đã được học trong khóa; hỏi từ vựng thuộc các topic đã được học trong khóa. <a class="lk" target="_blank" href="https://drive.google.com/drive/folders/189aj-wm9pdPe0ho5ZMDDvvVrl-vPGf9U?usp=sharing">Câu hỏi speaking</a>.<br><span style="color:var(--gray)" spellcheck="false">Recording mẫu: </span><a class="lk" target="_blank" href="https://drive.google.com/drive/folders/189aj-wm9pdPe0ho5ZMDDvvVrl-vPGf9U?usp=sharing">Beginner</a></td><td><ul class="b" style="margin:0"><li spellcheck="false">Nắm được một số từ vựng cơ bản trong tiếng Anh</li><li spellcheck="false">Phản xạ được 50% số câu hỏi quen thuộc bằng những câu trả lời ngắn (từ khoá / câu đơn)</li><li spellcheck="false">Còn nhiều lỗi phát âm và ngữ pháp</li></ul></td><td><span style="color:var(--gray)" spellcheck="false">–</span></td></tr><tr><td style="font-weight:800;color:var(--blue);white-space:nowrap" spellcheck="false">2.0–3.0</td><td style="font-weight:700" spellcheck="false">PRE-IELTS</td><td spellcheck="false">Hỏi &amp; phản xạ các topic, các câu hỏi đã được học trong khóa: <a class="lk" target="_blank" href="https://docs.google.com/document/u/4/d/1mxFjkj_u42RaUdDEKhwXwWt8LxChmmJQ/edit?usp=sharing&amp;ouid=102921648151980889953&amp;rtpof=true&amp;sd=true">Speaking questions.docx</a>.<br><span style="color:var(--gray)" spellcheck="false">Recording mẫu: </span><a class="lk" target="_blank" href="https://drive.google.com/file/d/1Zcx_mQVewDGXrX6AfKptwkNkGpY4FA_F/view?usp=sharing">IPR (2.0 – 3.0).mp4</a></td><td><ul class="b" style="margin:0"><li spellcheck="false">Nghe, nói, phản xạ được cơ bản về các chủ đề đời sống thường ngày (giới thiệu bản thân, gia đình, công việc, sở thích, …)</li><li spellcheck="false">Trả lời bằng câu đầy đủ với các câu hỏi WH, với câu hỏi dạng Describe, trả lời được tối thiểu 3–4 câu (tự nói hoặc tester gợi ý thêm), dù còn ngập ngừng</li><li spellcheck="false">Ngữ pháp hầu hết là câu đơn và câu ghép, dùng được thì hiện tại và quá khứ, mặc dù vẫn còn lỗi cơ bản</li><li spellcheck="false">Phát âm có thể sai một số âm đơn lẻ / thiếu trọng âm từ, âm cuối; chưa yêu cầu nhiều về nối âm, ngữ điệu; nhìn chung hiểu được</li></ul></td><td><span style="color:var(--gray)" spellcheck="false">–</span></td></tr><tr><td style="font-weight:800;color:var(--blue);white-space:nowrap" spellcheck="false">3.0–4.0</td><td style="font-weight:700" spellcheck="false">FOUNDATION A</td><td spellcheck="false">Hỏi &amp; phản xạ các topic, các câu hỏi đã được học trong khóa (speaking part 1): <a class="lk" target="_blank" href="https://docs.google.com/document/d/1rRs5UIWviL84LJ_QtlsbRkGP8m47fq_q/edit?usp=sharing&amp;ouid=102921648151980889953&amp;rtpof=true&amp;sd=true">Tổng hợp câu hỏi Speaking.docx</a>.<br><span style="color:var(--gray)" spellcheck="false">Recording mẫu: </span><a class="lk" target="_blank" href="https://drive.google.com/file/d/1l2yb7wih9MeOS-M9CRfeHdGoQ5KF7jkc/view?usp=sharing">IFA (3.0 – 4.0).mp4</a></td><td><ul class="b" style="margin:0"><li spellcheck="false">Phản xạ tương đối ổn với các chủ đề quen thuộc của Speaking Part 1, mỗi câu mở rộng thêm ít nhất 1–2 ý. Có thể còn ngập ngừng nhiều. Dùng được liên kết các câu đơn nhưng sử dụng các từ nối lặp lại. Có đoạn mất mạch lạc.</li><li spellcheck="false">Có vốn từ vựng tương đối về các topics được học trong khoá. Với các topics được hỏi thêm, có thể dùng từ chưa phù hợp nhưng vẫn cố gắng diễn tả được ý tưởng</li><li spellcheck="false">Cố gắng dùng ngữ pháp đa dạng: các thì, câu điều kiện, mệnh đề quan hệ, câu bị động (còn lỗi đa phần ở cấu trúc phức tạp; câu đơn hầu như không sai nhiều)</li><li spellcheck="false">Phát âm ở mức ổn, kiểm soát ngữ điệu và trọng âm còn hạn chế, có 1 số từ phát âm sai gây khó hiểu</li></ul></td><td><ul class="b" style="margin:0"><li spellcheck="false">Viết được 1 đoạn body, có câu topic sentence, phát triển ý cho mỗi main idea, ít nhất 1 câu, liên kết có thể chưa được rõ ràng.</li><li spellcheck="false">Từ vựng phù hợp nhưng còn đơn giản, vẫn lặp nhiều, còn lỗi chính tả.</li><li spellcheck="false">Ngữ pháp có cố gắng sử dụng đa dạng, có cố gắng dùng câu phức, ghép nhưng lỗi sai còn thường xuyên.</li></ul></td></tr><tr><td style="font-weight:800;color:var(--blue);white-space:nowrap" spellcheck="false">4.0–5.0</td><td style="font-weight:700" spellcheck="false">FOUNDATION B</td><td spellcheck="false">Speaking part 1+2: <b spellcheck="false">Part 1</b> – HV phản xạ với các topic random hoàn toàn; <b spellcheck="false">Part 2</b> – HV được hỏi 1 chủ đề tương tự với các topic và các câu hỏi đã học trong khoá, tham khảo: <a class="lk" target="_blank" href="https://docs.google.com/presentation/d/12vdEwzEW-QeNKGxImZpFrOEOu9fuxcmH/edit?usp=sharing&amp;ouid=102921648151980889953&amp;rtpof=true&amp;sd=true">Speaking questions.pptx</a>.<br><span style="color:var(--gray)" spellcheck="false">Recording mẫu: </span><a class="lk" target="_blank" href="https://drive.google.com/file/d/1rPtMCOALbiop2JpQFspM51kOEo019EF_/view?usp=sharing">IFB (4.0 – 5.0).mp4</a></td><td><ul class="b" style="margin:0"><li spellcheck="false">Phản xạ ổn với chủ đề Speaking Part 1, mỗi câu mở rộng thêm ít nhất 1–2 ý. Duy trì được mạch nói nhưng thường bị lặp, tự sửa hoặc nói chậm. Các câu đơn giản nói khá trôi chảy, còn chủ đề không phổ biến có thể còn ngập ngừng</li><li spellcheck="false">Có khả năng phát triển ý tưởng để nói một bài Speaking Part 2 hoàn chỉnh (ít nhất 1 phút 30s), tương đối trôi chảy, mạch lạc</li><li spellcheck="false">Từ vựng phù hợp chủ đề; chủ đề lạ có thể còn hạn chế</li><li spellcheck="false">Có cố gắng sử dụng ngữ pháp đa dạng, câu cơ bản kiểm soát lỗi tốt, câu phức còn 1 số lỗi sai</li><li spellcheck="false">Phát âm cơ bản, còn lỗi nhưng không ảnh hưởng việc hiểu của người nghe</li></ul></td><td><ul class="b" style="margin:0"><li spellcheck="false">Biết cách viết hoàn chỉnh một bài Writing Task 1 dạng miêu tả số liệu, có miêu tả và so sánh số liệu tương đối hợp lý dù còn thiếu đa dạng</li><li spellcheck="false">Viết được 2 đoạn body Writing Task 2, có câu topic sentence, đưa được main ideas hợp lý và có phát triển ý cho mỗi main idea, còn hạn chế và phát triển chưa đủ, và/hoặc có thể có chi tiết không liên quan.</li><li spellcheck="false">Có thể dùng công cụ liên kết còn hạn chế hoặc bị lạm dụng, kèm theo một số chỗ thiếu chính xác.</li><li spellcheck="false">Vốn từ hạn chế nhưng đủ ở mức tối thiểu cho yêu cầu của bài. Từ vựng cơ bản dùng được tương đối chính xác, nhưng còn lặp và chưa biết cách paraphrase</li><li spellcheck="false">Ngữ pháp có cố gắng dùng đa dạng nhưng còn lỗi sai, đặc biệt là ở các câu phức.</li></ul></td></tr><tr><td style="font-weight:800;color:var(--blue);white-space:nowrap" spellcheck="false">5.0–6.0</td><td style="font-weight:700" spellcheck="false">INTENSIVE</td><td spellcheck="false">Speaking 3 parts: <b spellcheck="false">Part 1</b> – topic random hoàn toàn; <b spellcheck="false">Part 2+3</b> – chủ đề tương tự các topic &amp; câu hỏi đã học, tham khảo (xem PART 4. SPEAKING): <a class="lk" target="_blank" href="https://docs.google.com/document/d/1DuLyDeQyKqcmcsXcp2acTkJUv60FjyrMZ1h_HuwKS8s/edit?usp=sharing">[DONE] Tổng hợp kiến thức khóa 5-6</a>.<br><span style="color:var(--gray)" spellcheck="false">Recording mẫu: </span><a class="lk" target="_blank" href="https://drive.google.com/file/d/1gFylhAn9uQ-Jw7is3GSTdmtv_biUa8Rt/view?usp=sharing">IIC (5.0 – 6.0).mp4</a></td><td><ul class="b" style="margin:0"><li spellcheck="false">Có khả năng phát triển được ý tưởng và duy trì được mạch nói ở cả 3 phần, đôi lúc mất mạch lạc do ngập ngừng/ lặp/ tự sửa. Dùng nhiều từ nối/ liên kết dù không phải lúc nào cũng phù hợp</li><li spellcheck="false">Vốn từ đủ để trả lời đa dạng chủ đề quen &amp; lạ, còn lỗi khi cố dùng từ vựng nâng cao, biết cách paraphrase tương đối</li><li spellcheck="false">Ngữ pháp dùng được đa dạng, còn một vài lỗi nhưng không nhiều, không ảnh hưởng đến nghĩa của câu</li><li spellcheck="false">Phát âm tự nhiên, có trọng âm, ngữ điệu, còn lỗi ở một vài từ đơn lẻ. Nhìn chung nghe hiểu được mà không tốn nhiều công</li></ul></td><td><ul class="b" style="margin:0"><li spellcheck="false">Các phần chính của đề bài đều được giải quyết (dù một số phần có thể được khai thác đầy đủ hơn các phần khác). Có viết được theo format khá rõ ràng, mặc dù việc chia đoạn không phải lúc nào cũng hợp lý</li><li spellcheck="false">Nêu được một quan điểm liên quan trực tiếp đến đề, tuy nhiên các kết luận đưa ra có thể chưa rõ ràng, chưa được lý giải thoả đáng hoặc bị lặp lại.</li><li spellcheck="false">Các ý chính đều liên quan, nhưng một số có thể phát triển chưa đủ hoặc thiếu rõ ràng; một số lập luận và dẫn chứng hỗ trợ có thể kém liên quan hoặc chưa thoả đáng</li><li spellcheck="false">Biết cách paraphrase cơ bản, mặc dù còn chưa chính xác</li><li spellcheck="false">Từ vựng đa phần ở mức hợp lý, có những chỗ cố gắng sử dụng từ khó và lạ nhưng có thể chưa chính xác hoặc phù hợp</li><li spellcheck="false">Có sử dụng ngữ pháp đa dạng. Các câu đơn ít lỗi cơ bản. Các cấu trúc phức tạp hơn có thể còn lỗi sai nhưng không ảnh hưởng đến việc hiểu nội dung</li></ul></td></tr><tr><td style="font-weight:800;color:var(--blue);white-space:nowrap" spellcheck="false">6.0–7.0+</td><td style="font-weight:700" spellcheck="false">ADVANCED</td><td spellcheck="false">HV test theo format như khi thi thật, 3 parts, topic random hoàn toàn theo forecast.<br><span style="color:var(--gray)" spellcheck="false">Recording mẫu: </span><a class="lk" target="_blank" href="https://drive.google.com/file/d/1_-2M6FMf8JaP0sAF_cZ9Mzmdf6SEOvoE/view?usp=sharing">IAC (6.0 – 7.0).mp4</a></td><td><ul class="b" style="margin:0"><li spellcheck="false">Có thể phản xạ nhanh và chủ động kéo dài câu trả lời, có thể còn ngập ngừng nhưng không ảnh hưởng đến sự mạch lạc. Sử dụng được linh hoạt và hiệu quả các discourse markers và các công cụ để kết nối ý tưởng</li><li spellcheck="false">Sử dụng linh hoạt vốn từ vựng trả lời đa dạng nhiều chủ đề, có khả năng sử dụng được các từ vựng ít phổ biến và linh hoạt trong việc paraphrase</li><li spellcheck="false">Sử dụng được ngữ pháp đa dạng và hầu như không có lỗi sai</li><li spellcheck="false">Phát âm rõ ràng dễ hiểu, ngữ điệu tự nhiên</li></ul></td><td><ul class="b" style="margin:0"><li spellcheck="false">Viết được task 1 và task 2 hoàn chỉnh, format phù hợp, xử lý được hầu hết yêu cầu của đề bài.</li><li spellcheck="false">Thông tin và ý tưởng được tổ chức hợp lý; có sự tiến triển rõ ràng xuyên suốt bài. (Có thể có vài sơ suất nhưng đều nhỏ.) Sử dụng linh hoạt nhiều công cụ liên kết, dù còn vài chỗ thiếu chính xác hoặc dùng quá nhiều/quá ít.</li><li spellcheck="false">Có quan điểm rõ ràng. Các ý chính được mở rộng và có lập luận hỗ trợ, nhưng có thể còn xu hướng khái quát hoá quá mức, hoặc thiếu sự tập trung và chính xác ở các ý/dẫn chứng hỗ trợ.</li><li spellcheck="false">Từ vựng tương đối đa dạng, có xu hướng paraphrase linh hoạt và sử dụng được các từ vựng theo đúng cụm, thậm chí sử dụng được 1 số từ ít phổ biến (có thể còn lỗi sai hoặc chưa phù hợp)</li><li spellcheck="false">Ngữ pháp đa dạng và hầu như không có lỗi sai (hoặc rất ít, không ảnh hưởng đến việc hiểu nội dung)</li></ul></td></tr></tbody></table></div><div style="font-size:12px;color:var(--gray);margin-top:4px" spellcheck="false">↔ Vuốt ngang để xem đủ các cột trên màn hình nhỏ.</div>
+    </div>
+  </div>
+</div>
+
 <!-- ══ P10 ══ -->
 <div class="phase" id="p10">
   <div class="ph green" onclick="tog(this)">
@@ -1301,7 +1405,7 @@ a.lk:hover{text-decoration:underline}
       <div class="cgrid">
         <div class="ccard"><div class="crole" spellcheck="false">Headteacher – Chuyên môn</div><div class="cname" spellcheck="false">Ms. Hoa</div><div class="cphone" spellcheck="false">0988 253 313</div><div class="cname" style="margin-top:5px" spellcheck="false">Ms. Phương</div><div class="cphone" spellcheck="false">0347 033 123</div><div class="cname" style="margin-top:5px" spellcheck="false">Ms. Hải</div><div class="cphone" spellcheck="false">0346 509 168</div><div class="cnote" spellcheck="false">Tài liệu, quy trình, chuyên môn, lần đầu dạy band mới</div></div>
         <div class="ccard"><div class="crole" spellcheck="false">Ban Vận Hành</div><div class="cname" spellcheck="false">Ms. Hương</div><div class="cphone" spellcheck="false">0911006362</div><div class="cnote" spellcheck="false">Sắp lớp, khai giảng, tính lương, tài khoản Zoom</div><div class="cname" style="margin-top:6px" spellcheck="false">Ms. Thanh Huệ</div><div class="cphone" spellcheck="false">0389897838</div><div class="cnote" spellcheck="false">• Tiếp nhận &amp; xử lý feedback HV, hỗ trợ HV các vấn đề phát sinh<br>• Đăng ký thi cho HV + GV<br>• Tiếp nhận đề xuất xin nghỉ/đổi lịch/chuyển hình thức học của GV</div><div class="cname" style="margin-top:6px" spellcheck="false">Ms. Đinh Quỳnh</div><div class="cphone" spellcheck="false">0867218166</div><div class="cnote" spellcheck="false">Tiếp nhận các vấn đề về cơ sở vật chất lớp Offline</div></div>
-        <div class="ccard"><div class="crole" spellcheck="false">Ban Công nghệ – Cổng</div><div class="cname" spellcheck="false">Lỗi không khẩn cấp =&gt; <span style="font-weight: normal;">nhắn nhóm "Báo lỗi" kèm mô tả/ hình ảnh lỗi</span></div><div class="cname" style="margin-top:5px" spellcheck="false">Bùi Xuân Thắng (khẩn)</div><div class="cphone" spellcheck="false">0967594691</div></div>
+        <div class="ccard"><div class="crole" spellcheck="false">Ban Công nghệ – Cổng</div><div class="cname" spellcheck="false">Lỗi không khẩn cấp =&gt; <span style="font-weight: normal;" spellcheck="false">nhắn nhóm "Báo lỗi" kèm mô tả/ hình ảnh lỗi</span></div><div class="cname" style="margin-top:5px" spellcheck="false">Bùi Xuân Thắng (khẩn)</div><div class="cphone" spellcheck="false">0967594691</div></div>
         <div class="ccard"><div class="crole" spellcheck="false">Hoa hồng giới thiệu HV</div><div class="cname" spellcheck="false">Ms. Trang</div><div class="cphone" spellcheck="false">0346 686 728</div><div class="cnote" spellcheck="false">Nhắn trước khi HV đăng ký</div></div>
       </div>
       <div class="al al-y" style="margin-top:12px"><span class="al-i">⚠️</span><span spellcheck="false">HV hỏi về bảo lưu, đổi lịch, xin học band khác → báo HV liên hệ <strong spellcheck="false">Cố vấn học tập</strong>. GV không tự quyết định.</span></div>
@@ -1495,6 +1599,7 @@ function tabSw(btn,id){
         if(bodyHit === 0 && !hdrHit){ p.style.display = 'none'; return; }
 
         highlightNode(inner, regex);
+        inner.querySelectorAll('details').forEach(function(d){ if(d.querySelector('mark')) d.open = true; });
         inner.querySelectorAll('.tabpane').forEach(function(tp){ tp.classList.add('on'); });
         inner.querySelectorAll('.tabs').forEach(function(tb){ tb.style.display = 'none'; });
         p.querySelector('.pb').classList.add('open');
@@ -1794,18 +1899,10 @@ function tabSw(btn,id){
 
 
 <!-- EDIT TOOLBAR -->
-<div id="etb">
-  <div id="etb-hint" spellcheck="false">✏️ Đang ở chế độ chỉnh sửa — bấm vào nội dung để sửa</div>
-  <div class="etb-row">
-    <button id="btn-save" class="etb-btn" onclick="saveFile()" style="display:none">⬇️ Tải về máy</button>
-    <button id="btn-push" class="etb-btn" onclick="pushToGithub()" style="display:none;background:#2563eb;color:#fff">💾 Lưu lên web</button>
-    <button id="btn-edit" class="etb-btn" onclick="askPassword()">✏️ Bật chỉnh sửa</button>
-    <button id="btn-settings" class="etb-btn" onclick="openSettings()" style="background:#475569;color:#fff">⚙️ Cài đặt</button>
-  </div>
-</div>
+
 
 <!-- TOAST NOTIFICATION -->
-<div id="push-toast" style="display:none"></div>
+
 
 <!-- PASSWORD MODAL -->
 <div id="pw-overlay" style="display: none; position: fixed; inset: 0px; background: rgba(0, 0, 0, 0.45); z-index: 99999; align-items: center; justify-content: center;">
@@ -1850,6 +1947,21 @@ function tabSw(btn,id){
   </div>
 </div>
 
-
+<script>
+/* TOC pills: mở phase đích khi click để người dùng thấy nội dung ngay */
+document.addEventListener('DOMContentLoaded', function(){
+  document.querySelectorAll('.toc-pills a').forEach(function(a){
+    a.addEventListener('click', function(){
+      var id = a.getAttribute('href');
+      if(!id || id.charAt(0) !== '#') return;
+      var target = document.querySelector(id);
+      if(!target) return;
+      var phase = target.closest('.phase') || target;
+      var pb = phase.querySelector('.pb'), arr = phase.querySelector('.ph-arr');
+      if(pb && !pb.classList.contains('open')){ pb.classList.add('open'); if(arr) arr.classList.add('open'); }
+    });
+  });
+});
+</script>
 
 </body></html>
